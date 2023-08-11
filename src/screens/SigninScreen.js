@@ -21,6 +21,7 @@ export default function SigninScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
   const submitHandler = async (e) => {
+    debugger;
     e.preventDefault();
     try {
       const { data } = await Axios.post("/api/users/signin", {
@@ -37,6 +38,7 @@ export default function SigninScreen() {
   };
 
   useEffect(() => {
+    debugger;
     if (userInfo) {
       navigate(redirect);
     }
