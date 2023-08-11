@@ -69,7 +69,9 @@ export default function ProductScreen() {
       dispatch({ type: "FETCH_REQUEST" });
       try {
         debugger;
-        const result = await axios.get(`/api/products/slug/${slug}`);
+        const result = await axios.get(
+          `https://pope-api.vercel.app/api/products/slug/${slug}`
+        );
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (error) {
         dispatch({ type: "FETCH_FAIL", payload: getError(error) });

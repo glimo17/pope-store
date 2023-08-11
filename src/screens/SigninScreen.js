@@ -24,10 +24,13 @@ export default function SigninScreen() {
     debugger;
     e.preventDefault();
     try {
-      const { data } = await Axios.post("/api/users/signin", {
-        email,
-        password,
-      });
+      const { data } = await Axios.post(
+        "https://pope-api.vercel.app/api/users/signin",
+        {
+          email,
+          password,
+        }
+      );
       ctxDispatch({ type: "USER_SIGNIN", payload: data });
       console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
