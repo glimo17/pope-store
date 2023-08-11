@@ -10,7 +10,7 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from ".././utils";
-
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_REQUEST":
@@ -51,7 +51,7 @@ export default function CustomerEditScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(`/api/customers/${userId}`, {
+        const { data } = await axios.get(url + `/api/customers/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         setName(data.name);
@@ -73,7 +73,7 @@ export default function CustomerEditScreen() {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       await axios.put(
-        `/api/customers/${userId}`,
+        url + `/api/customers/${userId}`,
         { _id: userId, name, email, phone },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

@@ -14,7 +14,7 @@ import Tabs from "react-bootstrap/Tabs";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -71,7 +71,7 @@ export default function AccountDetailScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(`/api/accounts`, {
+        const { data } = await axios.get(url + `/api/accounts`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });

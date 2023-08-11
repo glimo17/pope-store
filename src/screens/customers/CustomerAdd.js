@@ -10,7 +10,7 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from "../utils";
-
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_SUCCESS":
@@ -70,7 +70,7 @@ export default function CustomerAdd() {
       dispatch({ type: "FETCH_SUCCESS" });
 
       const { data } = await axios.post(
-        "/api/customers",
+        url + "api/customers",
         {
           name: name,
           email: email,
