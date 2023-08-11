@@ -176,10 +176,10 @@ export default function ChargesListScreen() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Cancelar
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            Guardar
           </Button>
         </Modal.Footer>
       </Modal>
