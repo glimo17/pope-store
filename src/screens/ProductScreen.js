@@ -47,6 +47,7 @@ const reducer = (state, action) => {
 };
 
 export default function ProductScreen() {
+  alert("hola");
   let reviewsRef = useRef();
 
   const [rating, setRating] = useState(0);
