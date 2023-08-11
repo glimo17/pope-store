@@ -11,6 +11,7 @@ import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from "../utils";
 import Modal from "react-bootstrap/Modal";
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_REQUEST":
@@ -67,7 +68,7 @@ export default function AccoutAddScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(`/api/customers`, {
+        const { data } = await axios.get(url + `/api/customers`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -90,7 +91,7 @@ export default function AccoutAddScreen() {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
-        "/api/accounts",
+        url + "/api/accounts",
         {
           customerId: idCustomer,
           ammount: ammount,
