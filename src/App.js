@@ -134,23 +134,24 @@ function App() {
                       <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                       </LinkContainer>
+                      <LinkContainer to="/admin/customers">
+                        <NavDropdown.Item>Clientes</NavDropdown.Item>
+                      </LinkContainer>
                       <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>Productos</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Cotizaciones</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer>
+
                       <LinkContainer to="/admin/charges">
                         <NavDropdown.Item>Cobros</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/accounts">
                         <NavDropdown.Item>Creditos</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/admin/customers">
-                        <NavDropdown.Item>Clientes</NavDropdown.Item>
+                      <LinkContainer to="/admin/orders">
+                        <NavDropdown.Item>Cotizaciones</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/users">
+                        <NavDropdown.Item>Usuarios</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
