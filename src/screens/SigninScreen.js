@@ -20,17 +20,15 @@ export default function SigninScreen() {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;
+  const url = "https://pope-api.vercel.app/";
   const submitHandler = async (e) => {
     debugger;
     e.preventDefault();
     try {
-      const { data } = await Axios.post(
-        "https://pope-api.vercel.app/api/users/signin",
-        {
-          email,
-          password,
-        }
-      );
+      const { data } = await Axios.post(url + "/api/users/signin", {
+        email,
+        password,
+      });
       ctxDispatch({ type: "USER_SIGNIN", payload: data });
       console.log(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
@@ -41,7 +39,6 @@ export default function SigninScreen() {
   };
 
   useEffect(() => {
-    debugger;
     if (userInfo) {
       navigate(redirect);
     }

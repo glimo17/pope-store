@@ -52,19 +52,16 @@ export default function CustomerListScreen() {
 
   const { state } = useContext(Store);
   const { userInfo } = state;
-
+  const url = "https://pope-api.vercel.app/";
   useEffect(() => {
     debugger;
     debugger;
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(
-          `https://pope-api.vercel.app/api/customers`,
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
+        const { data } = await axios.get(url + `api/customers`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({
@@ -84,7 +81,7 @@ export default function CustomerListScreen() {
     if (window.confirm("Esta seguro de borrar el cliente?")) {
       try {
         dispatch({ type: "DELETE_REQUEST" });
-        await axios.delete(`/api/customers/${user._id}`, {
+        await axios.delete(url + `/api/customers/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         toast.success("Cliente borrado");
