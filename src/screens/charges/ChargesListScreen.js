@@ -55,12 +55,44 @@ export default function ChargesListScreen() {
   const { userInfo } = state;
   const [show, setShow] = useState(false);
   const [ammount, setAmount] = useState("");
+
+  const [ammountPay, setAmountPay] = useState("");
+  const [idCharge, setIdCharge] = useState("");
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const setAmmountHandle = async (value) => {
-    setAmount(value);
+    setAmountPay(value);
+  };
+
+  const openMondal = async (e, value) => {
+    setIdCharge(value);
+    setShow(true);
   };
   const url = "https://pope-api.vercel.app/";
+
+  const setAmmountHandlePay = async (e) => {
+    debugger;
+
+    setShow(false);
+    try {
+      dispatch({ type: "UPDATE_REQUEST" });
+      await axios.put(
+        url + `api/updateAmmountPay/${idCharge}`,
+        { _id: idCharge, ammountPay },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({
+        type: "UPDATE_SUCCESS",
+      });
+      toast.success("User updated successfully");
+      navigate("/admin/users");
+    } catch (error) {
+      toast.error(getError(error));
+      dispatch({ type: "UPDATE_FAIL" });
+    }
+  };
   useEffect(() => {
     debugger;
     debugger;
@@ -126,6 +158,7 @@ export default function ChargesListScreen() {
             <tr>
               <th>Cliente</th>
               <th>Num credito</th>
+              <th>Monto de cobro</th>
               <th>Monto de pago</th>
               <th>ACTIONS</th>
             </tr>
@@ -136,11 +169,12 @@ export default function ChargesListScreen() {
                 <td>{user.accountId.customerId.name}</td>
                 <td>{user.accountId.num}</td>
                 <td>{user.ammount}</td>
+                <td>{user.ammountPay}</td>
                 <td>
                   <Button
                     type="button"
                     variant="success"
-                    onClick={() => setShow(true)}
+                    onClick={(e) => openMondal(e, user._id)}
                   >
                     <i className="fas fa-user-edit"></i>
                   </Button>
@@ -161,24 +195,17 @@ export default function ChargesListScreen() {
             <Form.Group className="mb-6" controlId="ammount">
               <Form.Label>Monto</Form.Label>
               <Form.Control
-                value={ammount}
                 onChange={(e) => setAmmountHandle(e.target.value)}
                 required
               />
             </Form.Group>
-
-            <div className="mb-3">
-              <Button onClick={(e) => setShow(false)} variant="outline-primary">
-                Agregar
-              </Button>
-            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={(e) => setAmmountHandlePay(e)}>
             Guardar
           </Button>
         </Modal.Footer>
