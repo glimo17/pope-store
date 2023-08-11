@@ -35,6 +35,7 @@ import UserListScreen from "./screens/UserListScreen";
 import CustomerListScreen from "./screens/customers/CustomerListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import CustomerEditScreen from "./screens/customers/CustomerEditScreen";
+import ChargesListScreen from "./screens/charges/ChargesListScreen";
 import AccoutsListScreen from "./screens/Accounts/AccoutsListScreen";
 import CustomerAddScreen from "./screens/customers/CustomerAddScreen";
 import AccoutAddScreen from "./screens/Accounts/AccoutAddScreen";
@@ -142,7 +143,7 @@ function App() {
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item>Users</NavDropdown.Item>
                       </LinkContainer> */}
-                      <LinkContainer to="/admin/accounts">
+                      <LinkContainer to="/admin/charges">
                         <NavDropdown.Item>Cobros</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/accounts">
@@ -246,6 +247,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <OrderListScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/admin/charges"
+                element={
+                  <AdminRoute>
+                    <ChargesListScreen />
                   </AdminRoute>
                 }
               ></Route>
