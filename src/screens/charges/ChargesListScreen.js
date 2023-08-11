@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,9 @@ import { toast } from "react-toastify";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
+import Form from "react-bootstrap/Form";
 import { getError } from "../utils";
-
+import Modal from "react-bootstrap/Modal";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -52,6 +53,13 @@ export default function ChargesListScreen() {
 
   const { state } = useContext(Store);
   const { userInfo } = state;
+  const [show, setShow] = useState(false);
+  const [ammount, setAmount] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const setAmmountHandle = async (value) => {
+    setAmount(value);
+  };
   const url = "https://pope-api.vercel.app/";
   useEffect(() => {
     debugger;
@@ -97,9 +105,9 @@ export default function ChargesListScreen() {
   return (
     <div>
       <Helmet>
-        <title>Clientes</title>
+        <title>Pagos</title>
       </Helmet>
-      <h1>Clientes</h1>
+      <h1>Pagos de la semana</h1>
       <Button
         type="button"
         variant="success"
@@ -132,17 +140,9 @@ export default function ChargesListScreen() {
                   <Button
                     type="button"
                     variant="success"
-                    onClick={() => navigate(`/admin/customer/${user._id}`)}
+                    onClick={() => setShow(true)}
                   >
                     <i className="fas fa-user-edit"></i>
-                  </Button>
-                  &nbsp;
-                  <Button
-                    type="button"
-                    variant="danger"
-                    onClick={() => deleteHandler(user)}
-                  >
-                    <i className="fas fa-trash"></i>
                   </Button>
                 </td>
               </tr>
@@ -150,6 +150,39 @@ export default function ChargesListScreen() {
           </tbody>
         </table>
       )}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Pago</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h1>Agregar monto de pago</h1>
+
+          <Form>
+            <Form.Group className="mb-6" controlId="ammount">
+              <Form.Label>Monto</Form.Label>
+              <Form.Control
+                value={ammount}
+                onChange={(e) => setAmmountHandle(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+            <div className="mb-3">
+              <Button onClick={(e) => setShow(false)} variant="outline-primary">
+                Agregar
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
