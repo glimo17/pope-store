@@ -46,6 +46,7 @@ export default function SignupScreen() {
   };
 
   useEffect(() => {
+    debugger;
     if (userInfo) {
       navigate(redirect);
     }
