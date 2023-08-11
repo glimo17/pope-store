@@ -68,7 +68,7 @@ export default function AccoutAddScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `/api/customers`, {
+        const { data } = await axios.get(url + `api/customers`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -91,7 +91,7 @@ export default function AccoutAddScreen() {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
-        url + "/api/accounts",
+        url + "api/accounts",
         {
           customerId: idCustomer,
           ammount: ammount,
