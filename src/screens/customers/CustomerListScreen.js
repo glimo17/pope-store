@@ -81,7 +81,7 @@ export default function CustomerListScreen() {
     if (window.confirm("Esta seguro de borrar el cliente?")) {
       try {
         dispatch({ type: "DELETE_REQUEST" });
-        await axios.delete(url + `/api/customers/${user._id}`, {
+        await axios.delete(url + `api/customers/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         toast.success("Cliente borrado");

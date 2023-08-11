@@ -25,7 +25,7 @@ export default function SigninScreen() {
     debugger;
     e.preventDefault();
     try {
-      const { data } = await Axios.post(url + "/api/users/signin", {
+      const { data } = await Axios.post(url + "api/users/signin", {
         email,
         password,
       });
