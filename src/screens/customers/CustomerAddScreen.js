@@ -40,7 +40,7 @@ export default function CustomerAddScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(false);
-  const url = "https://pope-api.vercel.app";
+  const url = "https://pope-api.vercel.app/";
   useEffect(() => {});
 
   const submitHandler = async (e) => {
