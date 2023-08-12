@@ -131,7 +131,7 @@ function App() {
                   )}
                   {userInfo && userInfo.isAdmin && (
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      {/* <LinkContainer to="/admin/dashboard">
+                      <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
@@ -142,7 +142,7 @@ function App() {
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
                         <NavDropdown.Item>Users</NavDropdown.Item>
-                      </LinkContainer> */}
+                      </LinkContainer>
                       <LinkContainer to="/admin/charges">
                         <NavDropdown.Item>Cobros</NavDropdown.Item>
                       </LinkContainer>
