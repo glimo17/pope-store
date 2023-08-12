@@ -40,7 +40,7 @@ export default function CustomerAddScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState(false);
-  const url = "https://pope-api.vercel.app/";
+  const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 
   const submitHandler = async (e) => {
@@ -48,7 +48,7 @@ export default function CustomerAddScreen() {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
-       url+ "/api/customers",
+        url + "/api/customers",
         {
           name: name,
           email: email,
