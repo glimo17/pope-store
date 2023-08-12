@@ -175,10 +175,9 @@ export default function AccountDetailScreen() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Cliente</th>
-                  <th>Numero</th>
+                  <th>Fecha</th>
+                  <th>Articulos</th>
                   <th>Monto</th>
-                  <th>Limite</th>
                   <th>ACTIONS</th>
                 </tr>
               </thead>
