@@ -40,7 +40,7 @@ const reducer = (state, action) => {
     case "UPDATE_REQUEST":
       return { ...state, loadingUpdate: true };
     case "UPDATE_SUCCESS":
-      return { ...state, loadingUpdate: false };
+      return { ...state, loadingUpdate: false, successDelete: false };
     case "UPDATE_FAIL":
       return { ...state, loadingUpdate: false };
     default:
@@ -75,14 +75,14 @@ export default function ChargesListScreen() {
   };
   const url = "https://pope-api.vercel.app/";
   const setAmmountHandlePay = async (e) => {
-    debugger;
+    setShow(false);
     e.preventDefault();
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
         url + "api/charges/update",
         {
-          id: idCharge,
+          accountId: idCharge,
           ammountPay: ammountPay,
         },
         {
@@ -94,11 +94,38 @@ export default function ChargesListScreen() {
       dispatch({
         type: "UPDATE_SUCCESS",
       });
-      toast.success("Credito creado");
-      navigate("/admin/accounts");
+      toast.success("Monto actualizado");
     } catch (error) {
       toast.error(getError(error));
       dispatch({ type: "UPDATE_FAIL" });
+    }
+  };
+  const setChargeHandle = async (e, value) => {
+    if (window.confirm("Esta seguro proceder?")) {
+      setIdCharge(value);
+      setShow(false);
+      e.preventDefault();
+      try {
+        dispatch({ type: "UPDATE_REQUEST" });
+        const { data } = await axios.post(
+          url + "api/charges/makeCharge",
+          {
+            accountId: idCharge,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        dispatch({
+          type: "UPDATE_SUCCESS",
+        });
+        toast.success("Monto actualizado");
+      } catch (error) {
+        toast.error(getError(error));
+        dispatch({ type: "UPDATE_FAIL" });
+      }
     }
   };
 
@@ -185,7 +212,14 @@ export default function ChargesListScreen() {
                     variant="success"
                     onClick={(e) => openMondal(e, user._id)}
                   >
-                    <i className="fas fa-user-edit"></i>
+                    Ingresar monto
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="success"
+                    onClick={(e) => setChargeHandle(e, user._id)}
+                  >
+                    Realizar pago
                   </Button>
                 </td>
               </tr>
