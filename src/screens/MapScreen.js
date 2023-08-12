@@ -13,7 +13,7 @@ import { toast } from 'react-toastify';
 
 const defaultLocation = { lat: 45.516, lng: -73.56 };
 const libs = ['places'];
-
+const url = "https://pope-api.vercel.app/";
 export default function MapScreen() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { userInfo } = state;

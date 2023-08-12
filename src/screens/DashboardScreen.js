@@ -25,7 +25,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
+const url = "https://pope-api.vercel.app/";
 export default function DashboardScreen() {
   const [{ loading, summary, error }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -38,7 +38,7 @@ export default function DashboardScreen() {
     const fetchData = async () => {
       debugger;
       try {
-        const { data } = await axios.get("/api/orders/summary", {
+        const { data } = await axios.get(url +"api/orders/summary", {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
