@@ -10,7 +10,7 @@ import { Store } from "../../Store";
 import Form from "react-bootstrap/Form";
 import { getError } from "../utils";
 import Modal from "react-bootstrap/Modal";
-import Card from 'react-bootstrap/Card';
+import Card from "react-bootstrap/Card";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -182,7 +182,7 @@ export default function ChargesListScreen() {
         variant="success"
         onClick={() => navigate(`/admin/customerAdd/`)}
       >
-        <i className="fas fa-user-edit"></i>Nuevo
+        <i className="fas fa-user-edit"></i>Pope
       </Button>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (
@@ -227,8 +227,6 @@ export default function ChargesListScreen() {
             ))}
           </tbody>
         </table>
-
-        
       )}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
