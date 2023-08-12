@@ -93,7 +93,7 @@ function App() {
                 <i className="fas fa-bars" />
               </Button>
               <LinkContainer to="/">
-                <Navbar.Brand>Pope Store</Navbar.Brand>
+                <Navbar.Brand>Pope Lo quieres? lo tienes!</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
