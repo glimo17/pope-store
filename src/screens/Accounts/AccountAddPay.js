@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { Helmet } from "react-helmet-async";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
@@ -16,14 +16,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-bootstrap/Modal";
-import Pedidos from "../../components/Pedidos";
 const url = "https://pope-api.vercel.app/";
 
 const reducer = (state, action) => {
+  debugger;
   switch (action.type) {
     case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "REQUEST2":
       return { ...state, loading: true };
     case "CREATE_REQUEST":
       return { ...state, loading: true };
@@ -33,15 +31,6 @@ const reducer = (state, action) => {
         users: action.payload,
         loading: false,
       };
-    case "REQUEST2_SUCCESS":
-      debugger;
-      return {
-        ...state,
-        pedidos: action.payload,
-        loading: false,
-      };
-    case "FETCH_FAIL2":
-      return { ...state, loading: false, error: action.payload };
     case "FETCH_FAIL":
       return { ...state, loading: false, error: action.payload };
     case "DELETE_REQUEST":
@@ -63,79 +52,31 @@ const reducer = (state, action) => {
 };
 
 export default function AccountDetailScreen() {
+  debugger;
   const navigate = useNavigate();
-  const [
-    { loading, error, users, pedidos, loadingDelete, successDelete },
-    dispatch,
-  ] = useReducer(reducer, {
-    loading: true,
-    error: "",
-  });
+  const [{ loading, error, users, loadingDelete, successDelete }, dispatch] =
+    useReducer(reducer, {
+      loading: true,
+      error: "",
+    });
 
   const { state } = useContext(Store);
   const { userInfo } = state;
   const [idCustomer, setIdCustomer] = useState("");
-  const [idAccount, setIdAccount] = useState("");
   const [nameCustomer, setNameCustomer] = useState("");
   const [num, setNum] = useState("");
   const [ammount, setAmount] = useState("");
   const [limit, setLimit] = useState(false);
-  const [showModalPedido, setShowModalPedido] = useState(false);
-  const [showModalPago, setShowModalPago] = useState(false);
+  const [show, setShow] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [value, setValue] = useState("");
-  const handleClose = () => setShowModalPedido(false);
-  const handleShow = () => setShowModalPedido(true);
-  const handleClosePago = () => setShowModalPago(false);
-  const handleShowPago = () => setShowModalPago(true);
-  const params = useParams();
-  const { id: userId } = params;
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const handleSelect = (e) => {
     console.log(e);
     setValue(e);
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/accounts/${userId}`, {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
-        setIdAccount(data._id);
-        setNameCustomer(data.customerId.name);
-        setNum(data.num);
-        setAmount(data.ammount);
-        setLimit(data.limit);
-        dispatch({ type: "FETCH_SUCCESS" });
-        const exe = async () => {
-          fetchData2();
-        };
-      } catch (err) {
-        dispatch({
-          type: "FETCH_FAIL",
-          payload: getError(err),
-        });
-      }
-    };
-    fetchData();
-  }, [userId, userInfo]);
 
-  const fetchData2 = async () => {
-    try {
-      dispatch({ type: "REQUEST2" });
-      const { data } = await axios.get(url + `api/pedidos/` + userId, {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      });
-      debugger;
-      alert(data);
-      dispatch({ type: "REQUEST2_SUCCESS", payload: data });
-    } catch (err) {
-      dispatch({
-        type: "FETCH_FAIL",
-        payload: getError(err),
-      });
-    }
-  };
 
   const deleteHandler = async (user) => {
     if (window.confirm("Are you sure to delete?")) {
@@ -162,38 +103,44 @@ export default function AccountDetailScreen() {
       <h1>Informacion del Credito</h1>
 
       <Form>
-        <div className="row">
-          <div className="col">
+        <div class="row">
+          <div class="col">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Numero del prestamo</Form.Label>
-              <Form.Control value={num} readOnly />
+              <Form.Control value={nameCustomer} readOnly />
             </Form.Group>
           </div>
-          <div className="col">
+          <div class="col">
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Cliente</Form.Label>
 
-              <Form.Control type="Ammount" value={nameCustomer} readOnly />
+              <Form.Control type="Ammount" value={ammount} readOnly />
+            </Form.Group>
+          </div>
+          <div class="col">
+            <Form.Group className=" mb-3" controlId="phone">
+              <Form.Label>Limite</Form.Label>
+              <Form.Control type="limit" value={limit} readOnly />
             </Form.Group>
           </div>
         </div>
-        <div className="row">
-          {/* <div className="col">
+        <div class="row">
+          <div class="col">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Cliente</Form.Label>
               <Form.Control value={nameCustomer} readOnly />
             </Form.Group>
-          </div> */}
-          <div className="col">
+          </div>
+          <div class="col">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Saldo</Form.Label>
-              <Form.Control value={ammount} readOnly />
+              <Form.Control value={nameCustomer} readOnly />
             </Form.Group>
           </div>
-          <div className="col">
+          <div class="col">
             <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Limite</Form.Label>
-              <Form.Control value={limit} readOnly />
+              <Form.Label>Monto</Form.Label>
+              <Form.Control value={nameCustomer} readOnly />
             </Form.Group>
           </div>
         </div>
@@ -205,14 +152,56 @@ export default function AccountDetailScreen() {
         className="mb-3"
       >
         <Tab eventKey="home" title="Pedidos">
-          {idAccount ? <Pedidos id={idAccount} /> : <div></div>}
+          <Button type="button" variant="danger">
+            Agregar Pedido
+          </Button>
+          {loadingDelete && <LoadingBox></LoadingBox>}
+          {loading ? (
+            <LoadingBox></LoadingBox>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Articulos</th>
+                  <th>Monto</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user._id}>
+                    <td>{user.customerId.name}</td>
+                    <td>{user.num}</td>
+                    <td>{user.ammount}</td>
+                    <td>{user.limit}</td>
+                    <td>
+                      <Button
+                        type="button"
+                        variant="success"
+                        onClick={() => navigate(`/admin/customer/${user._id}`)}
+                      >
+                        <i className="fas fa-user-edit"></i>
+                      </Button>
+                      &nbsp;
+                      <Button
+                        type="button"
+                        variant="danger"
+                        onClick={() => deleteHandler(user)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </Tab>
-        {/* <Tab eventKey="profile" title="Pagos">
-          <Button
-            type="button"
-            onClick={(e) => handleShowPago(true)}
-            variant="danger"
-          >
+        <Tab eventKey="profile" title="Pagos">
+          <Button type="button" variant="danger">
             Agregar Pago
           </Button>
           {loadingDelete && <LoadingBox></LoadingBox>}
@@ -263,8 +252,8 @@ export default function AccountDetailScreen() {
         </Tab>
         <Tab eventKey="contact" title="Confifurar Pagos">
           <Form>
-            <div className="row">
-              <div className="col-3">
+            <div class="row">
+              <div class="col-3">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de configuracion</Form.Label>
                 </Form.Group>
@@ -273,7 +262,7 @@ export default function AccountDetailScreen() {
                   onChange={(date) => setStartDate(date)}
                 />
               </div>
-              <div className="col-3">
+              <div class="col-3">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de Inicio</Form.Label>
                 </Form.Group>
@@ -282,7 +271,7 @@ export default function AccountDetailScreen() {
                   onChange={(date) => setStartDate(date)}
                 />
               </div>
-              <div className="col-3">
+              <div class="col-3">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de Inicio</Form.Label>
                   <DropdownButton title="Selecione" onSelect={handleSelect}>
@@ -299,72 +288,86 @@ export default function AccountDetailScreen() {
               <Button type="button" variant="success">
                 Guardar
               </Button>
-              {/* <div className="col">
+              {/* <div class="col">
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Cliente</Form.Label>
 
                   <Form.Control type="Ammount" value={ammount} readOnly />
                 </Form.Group>
               </div>
-              <div className="col">
+              <div class="col">
                 <Form.Group className=" mb-3" controlId="phone">
                   <Form.Label>Limite</Form.Label>
                   <Form.Control type="limit" value={limit} readOnly />
                 </Form.Group>
               </div>
             </div>
-            <div className="row">
-              <div className="col">
+            <div class="row">
+              <div class="col">
                 <Form.Group className="mb-3" controlId="name">
                   <Form.Label>Cliente</Form.Label>
                   <Form.Control value={nameCustomer} readOnly />
                 </Form.Group>
               </div>
-              <div className="col">
+              <div class="col">
                 <Form.Group className="mb-3" controlId="name">
                   <Form.Label>Saldo</Form.Label>
                   <Form.Control value={nameCustomer} readOnly />
                 </Form.Group>
               </div>
-              <div className="col">
+              <div class="col">
                 <Form.Group className="mb-3" controlId="name">
                   <Form.Label>Monto</Form.Label>
                   <Form.Control value={nameCustomer} readOnly />
                 </Form.Group>
               </div> */}
-        {/* </div>
+            </div>
           </Form>
-        </Tab> */}{" "}
+        </Tab>
       </Tabs>
-      <Modal show={showModalPago} onHide={handleClosePago}>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Agregar pago</Modal.Title>
+          <Modal.Title>Lista de CLientes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                // onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                // onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phone">
-              <Form.Label>Telefono</Form.Label>
-              <Form.Control
-                type="phone"
-                // onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </Form.Group>
+            <div class="row">
+              <div class="col-3">
+                <Form.Group controlId="name">
+                  <Form.Label>Fecha de configuracion</Form.Label>
+                </Form.Group>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </div>
+              <div class="col-3">
+                <Form.Group controlId="name">
+                  <Form.Label>Fecha de Inicio</Form.Label>
+                </Form.Group>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </div>
+              <div class="col-3">
+                <Form.Group controlId="name">
+                  <Form.Label>Fecha de Inicio</Form.Label>
+                  <DropdownButton title="Selecione" onSelect={handleSelect}>
+                    <Dropdown.Item eventKey="option-1">Semanal</Dropdown.Item>
+                    <Dropdown.Item eventKey="option-2">
+                      Bi Semanal
+                    </Dropdown.Item>
+                    <Dropdown.Item eventKey="option-3">Quincenal</Dropdown.Item>
+                    <Dropdown.Divider />
+                  </DropdownButton>
+                  <Form.Control value={value} readOnly />
+                </Form.Group>
+              </div>
+              <Button type="button" variant="success">
+                Guardar
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>

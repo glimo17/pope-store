@@ -8,6 +8,7 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from "../utils";
+import Modal from "react-bootstrap/Modal";
 const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;
