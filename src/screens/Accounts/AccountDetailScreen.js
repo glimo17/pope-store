@@ -163,6 +163,9 @@ export default function AccountDetailScreen() {
         className="mb-3"
       >
         <Tab eventKey="home" title="Pedidos">
+          <Button type="button" variant="danger">
+            Agregar Pedido
+          </Button>
           {loadingDelete && <LoadingBox></LoadingBox>}
           {loading ? (
             <LoadingBox></LoadingBox>
@@ -210,6 +213,9 @@ export default function AccountDetailScreen() {
           )}
         </Tab>
         <Tab eventKey="profile" title="Pagos">
+          <Button type="button" variant="danger">
+            Agregar Pago
+          </Button>
           {loadingDelete && <LoadingBox></LoadingBox>}
           {loading ? (
             <LoadingBox></LoadingBox>
