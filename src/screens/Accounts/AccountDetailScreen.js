@@ -13,6 +13,13 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import DatePicker from "react-datepicker";
 
+import {
+  MDBDropdown,
+  MDBDropdownMenu,
+  MDBDropdownToggle,
+  MDBDropdownItem,
+} from "mdb-react-ui-kit";
+
 import "react-datepicker/dist/react-datepicker.css";
 
 const reducer = (state, action) => {
@@ -266,7 +273,7 @@ export default function AccountDetailScreen() {
             <div class="row">
               <div class="col">
                 <Form.Group className="mb-3" controlId="name">
-                  <Form.Label>Fecha apartir de hoy</Form.Label>
+                  <Form.Label>Fecha de configuracion</Form.Label>
                 </Form.Group>
                 <DatePicker
                   selected={startDate}
@@ -274,6 +281,26 @@ export default function AccountDetailScreen() {
                 />
               </div>
               <div class="col">
+                <Form.Group className="mb-3" controlId="name">
+                  <Form.Label>Fecha de Inicio</Form.Label>
+                </Form.Group>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </div>
+              <div class="col">
+                <MDBDropdown>
+                  <MDBDropdownToggle>Dropdown button</MDBDropdownToggle>
+                  <MDBDropdownMenu>
+                    <MDBDropdownItem link>Semanal</MDBDropdownItem>
+                    <MDBDropdownItem link>Bi Semanal</MDBDropdownItem>
+                    <MDBDropdownItem link>Quincenal</MDBDropdownItem>
+                    <MDBDropdownItem link>Mensual</MDBDropdownItem>
+                  </MDBDropdownMenu>
+                </MDBDropdown>
+              </div>
+              {/* <div class="col">
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Cliente</Form.Label>
 
@@ -305,7 +332,7 @@ export default function AccountDetailScreen() {
                   <Form.Label>Monto</Form.Label>
                   <Form.Control value={nameCustomer} readOnly />
                 </Form.Group>
-              </div>
+              </div> */}
             </div>
           </Form>
         </Tab>
