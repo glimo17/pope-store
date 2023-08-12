@@ -8,7 +8,7 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from "../utils";
-const url = "https://pope-api.vercel.app/";
+
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -58,7 +58,7 @@ export default function AccoutsListScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/accounts`, {
+        const { data } = await axios.get(`/api/accounts`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -80,7 +80,7 @@ export default function AccoutsListScreen() {
     if (window.confirm("Are you sure to delete?")) {
       try {
         dispatch({ type: "DELETE_REQUEST" });
-        await axios.delete(url + `api/customers/${user._id}`, {
+        await axios.delete(`/api/customers/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         toast.success("user deleted successfully");
