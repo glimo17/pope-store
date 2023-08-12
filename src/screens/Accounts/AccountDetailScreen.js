@@ -21,6 +21,7 @@ import {
 } from "mdb-react-ui-kit";
 
 import "react-datepicker/dist/react-datepicker.css";
+const url = "https://pope-api.vercel.app/";
 
 const reducer = (state, action) => {
   debugger;
@@ -78,7 +79,7 @@ export default function AccountDetailScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(`/api/accounts`, {
+        const { data } = await axios.get(url + `/api/accounts`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -100,7 +101,7 @@ export default function AccountDetailScreen() {
     if (window.confirm("Are you sure to delete?")) {
       try {
         dispatch({ type: "DELETE_REQUEST" });
-        await axios.delete(`/api/customers/${user._id}`, {
+        await axios.delete(url + `/api/customers/${user._id}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         toast.success("user deleted successfully");
