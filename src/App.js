@@ -93,7 +93,7 @@ function App() {
                 <i className="fas fa-bars" />
               </Button>
               <LinkContainer to="/">
-                <Navbar.Brand>Pope Lo quieres? lo tienes!</Navbar.Brand>
+                <Navbar.Brand>Pope Store</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
@@ -131,27 +131,26 @@ function App() {
                   )}
                   {userInfo && userInfo.isAdmin && (
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
-                      <LinkContainer to="/admin/dashboard">
+                      {/* <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/admin/customers">
-                        <NavDropdown.Item>Clientes</NavDropdown.Item>
-                      </LinkContainer>
                       <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Productos</NavDropdown.Item>
+                        <NavDropdown.Item>Products</NavDropdown.Item>
                       </LinkContainer>
-
+                      <LinkContainer to="/admin/orders">
+                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/users">
+                        <NavDropdown.Item>Users</NavDropdown.Item>
+                      </LinkContainer> */}
                       <LinkContainer to="/admin/charges">
                         <NavDropdown.Item>Cobros</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/accounts">
                         <NavDropdown.Item>Creditos</NavDropdown.Item>
                       </LinkContainer>
-                      <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Cotizaciones</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Usuarios</NavDropdown.Item>
+                      <LinkContainer to="/admin/customers">
+                        <NavDropdown.Item>Clientes</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -172,7 +171,7 @@ function App() {
               <strong>Categories</strong>
             </Nav.Item>
 
-            {categories.map((category) => (
+            {/* {categories.map((category) => (
               <Nav.Item key={category}>
                 <LinkContainer
                   to={`/search?category=${category}`}
@@ -181,7 +180,7 @@ function App() {
                   <Nav.Link>{category}</Nav.Link>
                 </LinkContainer>
               </Nav.Item>
-            ))}
+            ))} */}
           </Nav>
         </div>
         <main>
