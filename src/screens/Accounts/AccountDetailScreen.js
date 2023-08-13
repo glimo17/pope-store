@@ -17,6 +17,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-bootstrap/Modal";
 import Pedidos from "../../components/Pedidos";
+import Pagos from "../../components/Pagos";
 const url = "https://pope-api.vercel.app/";
 
 const reducer = (state, action) => {
@@ -123,7 +124,7 @@ export default function AccountDetailScreen() {
   const fetchData2 = async () => {
     try {
       dispatch({ type: "REQUEST2" });
-      const { data } = await axios.get(url + `api/pedidos/` + userId, {
+      const { data } = await axios.get(url + `api/pedidos`, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
       debugger;
@@ -205,62 +206,12 @@ export default function AccountDetailScreen() {
         className="mb-3"
       >
         <Tab eventKey="home" title="Pedidos">
-          {idAccount ? <Pedidos id={idAccount} /> : <div></div>}
+          {idAccount ? <Pedidos accountId={idAccount} /> : <div></div>}
         </Tab>
-        {/* <Tab eventKey="profile" title="Pagos">
-          <Button
-            type="button"
-            onClick={(e) => handleShowPago(true)}
-            variant="danger"
-          >
-            Agregar Pago
-          </Button>
-          {loadingDelete && <LoadingBox></LoadingBox>}
-          {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Cliente</th>
-                  <th>Numero</th>
-                  <th>Monto</th>
-                  <th>Limite</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user.customerId.name}</td>
-                    <td>{user.num}</td>
-                    <td>{user.ammount}</td>
-                    <td>{user.limit}</td>
-                    <td>
-                      <Button
-                        type="button"
-                        variant="success"
-                        onClick={() => navigate(`/admin/customer/${user._id}`)}
-                      >
-                        <i className="fas fa-user-edit"></i>
-                      </Button>
-                      &nbsp;
-                      <Button
-                        type="button"
-                        variant="danger"
-                        onClick={() => deleteHandler(user)}
-                      >
-                        <i className="fas fa-trash"></i>
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
+        <Tab eventKey="profile" title="Pagos">
+          {idAccount ? <Pagos accountId={idAccount} /> : <div></div>}
         </Tab>
+        {/* 
         <Tab eventKey="contact" title="Confifurar Pagos">
           <Form>
             <div className="row">

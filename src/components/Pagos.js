@@ -50,12 +50,12 @@ const reducer = (state, action) => {
       return state;
   }
 };
-export default function Pedidos({ accountId }) {
+export default function Pagos({ accountId }) {
   debugger;
-  const handleClose = () => setShowModalPedido(false);
-  const handleShow = () => setShowModalPedido(true);
-  const [showModalPedido, setShowModalPedido] = useState(false);
-  const [showModalPago, setShowModalPago] = useState(false);
+
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   const navigate = useNavigate();
   const [product, setProduct] = useState("");
   const [cant, setCant] = useState("");
@@ -69,7 +69,7 @@ export default function Pedidos({ accountId }) {
     error: "",
   });
   const deleteHandler = async (user) => {
-    setShowModalPedido(false);
+    setShowModal(false);
     try {
       dispatch({ type: "DELETE_REQUEST" });
       await axios.post(
@@ -96,13 +96,15 @@ export default function Pedidos({ accountId }) {
   };
   const { state } = useContext(Store);
   const { userInfo } = state;
+
   useEffect(() => {
+    debugger;
     debugger;
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos`, {
-          headers: { Authorization: `Bearer userInfo.token` },
+        const { data } = await axios.get(url + `api/charges`, {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
@@ -118,44 +120,43 @@ export default function Pedidos({ accountId }) {
       fetchData();
     }
   }, [userInfo, successDelete]);
-
   return users ? (
     <div>
       {" "}
-      <Button type="button" onClick={(e) => setShowModalPedido(true)}>
-        Agregar Pedido
+      <Button type="button" onClick={(e) => setShowModal(true)}>
+        Agregar Pago
       </Button>
       <table className="table">
         <thead>
           <tr>
-            <th>Fecha</th>
-            <th>Articulos</th>
-            <th>Monto</th>
+            <th>Cliente</th>
+            <th>Num credito</th>
+            <th>Monto de cobro</th>
+            <th>Monto de pago</th>
             <th>ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.product}</td>
-              <td>{user.cant}</td>
+              <td>{user.accountId.customerId.name}</td>
+              <td>{user.accountId.num}</td>
               <td>{user.ammount}</td>
-              <td>{user.date}</td>
+              <td>{user.ammountPay}</td>
               <td>
                 <Button
                   type="button"
                   variant="success"
-                  onClick={() => navigate(`/admin/customer/${user._id}`)}
+                  //   onClick={(e) => openMondal(e, user._id)}
                 >
-                  <i className="fas fa-user-edit"></i>
+                  Ingresar monto
                 </Button>
-                &nbsp;
                 <Button
                   type="button"
-                  variant="danger"
-                  //   onClick={() => deleteHandler(user)}
+                  variant="success"
+                  //   onClick={(e) => setChargeHandle(e, user._id)}
                 >
-                  <i className="fas fa-trash"></i>
+                  Realizar pago
                 </Button>
               </td>
             </tr>
@@ -170,7 +171,7 @@ export default function Pedidos({ accountId }) {
           ) : (
      
           )} */}
-      <Modal show={showModalPedido} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Agregar pedido</Modal.Title>
         </Modal.Header>
