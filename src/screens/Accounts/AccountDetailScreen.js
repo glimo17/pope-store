@@ -160,45 +160,57 @@ export default function AccountDetailScreen() {
       <Helmet>
         <title>Creditos</title>
       </Helmet>
-      <h1>Informacion del Credito</h1>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            {" "}
+            <h1>Informacion del Credito</h1>
+            <Form>
+              <div className="row">
+                <div className="col">
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Numero del prestamo</Form.Label>
+                    <Form.Control value={num} readOnly />
+                  </Form.Group>
+                </div>
+                <div className="col">
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Cliente</Form.Label>
 
-      <Form>
-        <div className="row">
-          <div className="col">
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Numero del prestamo</Form.Label>
-              <Form.Control value={num} readOnly />
-            </Form.Group>
-          </div>
-          <div className="col">
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Cliente</Form.Label>
-
-              <Form.Control type="Ammount" value={nameCustomer} readOnly />
-            </Form.Group>
-          </div>
-        </div>
-        <div className="row">
-          {/* <div className="col">
+                    <Form.Control
+                      type="Ammount"
+                      value={nameCustomer}
+                      readOnly
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row">
+                {/* <div className="col">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Cliente</Form.Label>
               <Form.Control value={nameCustomer} readOnly />
             </Form.Group>
           </div> */}
-          <div className="col">
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Saldo</Form.Label>
-              <Form.Control value={ammount} readOnly />
-            </Form.Group>
+                <div className="col">
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Saldo</Form.Label>
+                    <Form.Control value={ammount} readOnly />
+                  </Form.Group>
+                </div>
+                <div className="col">
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Limite</Form.Label>
+                    <Form.Control value={limit} readOnly />
+                  </Form.Group>
+                </div>
+              </div>
+            </Form>
           </div>
-          <div className="col">
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Limite</Form.Label>
-              <Form.Control value={limit} readOnly />
-            </Form.Group>
-          </div>
+          {/* <div class="col-sm">One of three columns</div> */}
         </div>
-      </Form>
+      </div>
+
       <h1>Detalle de credito</h1>
       <Tabs
         defaultActiveKey="profile"
@@ -211,19 +223,38 @@ export default function AccountDetailScreen() {
         <Tab eventKey="profile" title="Pagos">
           {idAccount ? <Pagos accountId={idAccount} /> : <div></div>}
         </Tab>
-        {/* 
-        <Tab eventKey="contact" title="Confifurar Pagos">
+        <Tab eventKey="profile2" title="Configurar frequencia de pagos ">
           <Form>
             <div className="row">
-              <div className="col-3">
+              <div className="col">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de configuracion</Form.Label>
                 </Form.Group>
                 <DatePicker
                   selected={startDate}
+                  readOnly
                   onChange={(date) => setStartDate(date)}
                 />
               </div>
+              <div className="col">
+                <Form.Group controlId="name">
+                  <Form.Label>Frequencias de pago</Form.Label>
+                  <Form.Select aria-label="Frequencias de pago">
+                    <option>Seleccione</option>
+                    <option value="1">Semanal</option>
+                    <option value="2">Bi Semanal</option>
+                    <option value="3">Quincenal</option>
+                    <option value="3">Mensual</option>
+                  </Form.Select>
+                </Form.Group>
+              </div>
+            </div>
+          </Form>
+        </Tab>
+        {/* 
+        <Tab eventKey="contact" title="Confifurar Pagos">
+          <Form>
+           
               <div className="col-3">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de Inicio</Form.Label>
