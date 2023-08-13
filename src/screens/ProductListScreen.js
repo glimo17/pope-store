@@ -141,7 +141,7 @@ export default function ProductListScreen() {
     <div>
       <Row>
         <Col>
-          <h1>Products</h1>
+          <h1>Articulos</h1>
         </Col>
         <Col className="col text-end">
           <div>
@@ -150,7 +150,7 @@ export default function ProductListScreen() {
               type="button"
               onClick={createHandler}
             >
-              Create Product
+              Crear nuevo articulo
             </Button>
           </div>
         </Col>
@@ -167,21 +167,19 @@ export default function ProductListScreen() {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
+                <th>DESCRIPCCION</th>
+                <th>PRECIO</th>
+                {/* <th>CATEGORY</th> */}
+                <th>MARCA</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
-                  <td>{product.category}</td>
+                  {/* <td>{product.category}</td> */}
                   <td>{product.brand}</td>
                   <td>
                     <Button
