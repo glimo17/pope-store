@@ -16,8 +16,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-const url = "http://localhost:5000/";
-// const url = "https://pope-api.vercel.app/";
+// const url = "http://localhost:5000/";
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -102,18 +102,18 @@ export default function Pagos({ accountId }) {
     try {
       dispatch({ type: "DELETE_REQUEST" });
       await axios.post(
-        url + `api/pedidos`,
+        url + `api/charges`,
         {
           accountId: accountId,
-          product: product,
-          cant: cant,
+          description: product,
+          ammountPay: ammount,
           ammount: ammount,
         },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
       );
-      toast.success("Pedido agregado");
+      toast.success("Pago agregado");
       dispatch({ type: "DELETE_SUCCESS" });
     } catch (error) {
       alert(getError(error));
@@ -132,7 +132,7 @@ export default function Pagos({ accountId }) {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/charges`, {
+        const { data } = await axios.get(url + `api/charges/` + accountId, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -158,38 +158,19 @@ export default function Pagos({ accountId }) {
       <table className="table">
         <thead>
           <tr>
-            <th>Cliente</th>
-            <th>Num credito</th>
+            <th>Descripccion</th>
             <th>Monto de cobro</th>
             <th>Monto de pago</th>
             <th>Estado</th>
-            <th>ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.accountId.customerId.name}</td>
-              <td>{user.accountId.num}</td>
+              <td>{user.description}</td>
               <td>{user.ammount}</td>
               <td>{user.ammountPay}</td>
               <td>{user.status}</td>
-              <td>
-                <Button
-                  type="button"
-                  variant="success"
-                  //   onClick={(e) => openMondal(e, user._id)}
-                >
-                  Ingresar monto
-                </Button>
-                <Button
-                  type="button"
-                  variant="success"
-                  onClick={(e) => setChargeHandle(e, user._id)}
-                >
-                  Realizar pago
-                </Button>
-              </td>
             </tr>
           ))}
         </tbody>
@@ -209,17 +190,9 @@ export default function Pagos({ accountId }) {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Articulos</Form.Label>
+              <Form.Label>Descripccion del pago</Form.Label>
               <Form.Control
                 onChange={(e) => setProduct(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Cantidad</Form.Label>
-              <Form.Control
-                type="email"
-                onChange={(e) => setCant(e.target.value)}
                 required
               />
             </Form.Group>

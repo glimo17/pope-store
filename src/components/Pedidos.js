@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
+import Autocomplete from "./Autocomplete";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
 // const url = "http://localhost:5000/";
@@ -131,35 +132,15 @@ export default function Pedidos({ accountId }) {
             <th>Fecha</th>
             <th>Articulos</th>
             <th>Monto</th>
-            <th>ACTIONS</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.accountId.customerId.name}</td>
               <td>{user.date}</td>
               <td>{user.product}</td>
               <td>{user.cant}</td>
               <td>{user.ammount}</td>
-
-              <td>
-                <Button
-                  type="button"
-                  variant="success"
-                  onClick={() => navigate(`/admin/customer/${user._id}`)}
-                >
-                  <i className="fas fa-user-edit"></i>
-                </Button>
-                &nbsp;
-                <Button
-                  type="button"
-                  variant="danger"
-                  //   onClick={() => deleteHandler(user)}
-                >
-                  <i className="fas fa-trash"></i>
-                </Button>
-              </td>
             </tr>
           ))}
         </tbody>
@@ -180,10 +161,69 @@ export default function Pedidos({ accountId }) {
           <Form>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Articulos</Form.Label>
-              <Form.Control
-                onChange={(e) => setProduct(e.target.value)}
-                required
-              />
+              {/* <Autocomplete
+                suggestions={[
+                  "Alabama",
+                  "Alaska",
+                  "American Samoa",
+                  "Arizona",
+                  "Arkansas",
+                  "California",
+                  "Colorado",
+                  "Connecticut",
+                  "Delaware",
+                  "District Of Columbia",
+                  "Federated States Of Micronesia",
+                  "Florida",
+                  "Georgia",
+                  "Guam",
+                  "Hawaii",
+                  "Idaho",
+                  "Illinois",
+                  "Indiana",
+                  "Iowa",
+                  "Kansas",
+                  "Kentucky",
+                  "Louisiana",
+                  "Maine",
+                  "Marshall Islands",
+                  "Maryland",
+                  "Massachusetts",
+                  "Michigan",
+                  "Minnesota",
+                  "Mississippi",
+                  "Missouri",
+                  "Montana",
+                  "Nebraska",
+                  "Nevada",
+                  "New Hampshire",
+                  "New Jersey",
+                  "New Mexico",
+                  "New York",
+                  "North Carolina",
+                  "North Dakota",
+                  "Northern Mariana Islands",
+                  "Ohio",
+                  "Oklahoma",
+                  "Oregon",
+                  "Palau",
+                  "Pennsylvania",
+                  "Puerto Rico",
+                  "Rhode Island",
+                  "South Carolina",
+                  "South Dakota",
+                  "Tennessee",
+                  "Texas",
+                  "Utah",
+                  "Vermont",
+                  "Virgin Islands",
+                  "Virginia",
+                  "Washington",
+                  "West Virginia",
+                  "Wisconsin",
+                  "Wyoming",
+                ]}
+              /> */}
             </Form.Group>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Cantidad</Form.Label>
