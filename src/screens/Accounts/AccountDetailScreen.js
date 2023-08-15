@@ -72,11 +72,17 @@ export default function AccountDetailScreen() {
     loading: true,
     error: "",
   });
-
+  const params = useParams();
+  const { id: userId } = params;
   const { state } = useContext(Store);
   const { userInfo } = state;
   const [idCustomer, setIdCustomer] = useState("");
-  const [idAccount, setIdAccount] = useState("");
+  const [freq, setFreq] = useState("");
+  const [date, setDate] = useState("");
+  const [dateinit, setDateInit] = useState("");
+  const [day, setDay] = useState("");
+  const [idAccount, setIdAccount] = useState(userId);
+
   const [nameCustomer, setNameCustomer] = useState("");
   const [num, setNum] = useState("");
   const [ammount, setAmount] = useState("");
@@ -89,8 +95,7 @@ export default function AccountDetailScreen() {
   const handleShow = () => setShowModalPedido(true);
   const handleClosePago = () => setShowModalPago(false);
   const handleShowPago = () => setShowModalPago(true);
-  const params = useParams();
-  const { id: userId } = params;
+
   const handleSelect = (e) => {
     console.log(e);
     setValue(e);
@@ -102,15 +107,12 @@ export default function AccountDetailScreen() {
         const { data } = await axios.get(url + `api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-        setIdAccount(data._id);
+
         setNameCustomer(data.customerId.name);
         setNum(data.num);
         setAmount(data.ammount);
         setLimit(data.limit);
         dispatch({ type: "FETCH_SUCCESS" });
-        const exe = async () => {
-          fetchData2();
-        };
       } catch (err) {
         dispatch({
           type: "FETCH_FAIL",
@@ -119,24 +121,7 @@ export default function AccountDetailScreen() {
       }
     };
     fetchData();
-  }, [userId, userInfo]);
-
-  const fetchData2 = async () => {
-    try {
-      dispatch({ type: "REQUEST2" });
-      const { data } = await axios.get(url + `api/pedidos`, {
-        headers: { Authorization: `Bearer ${userInfo.token}` },
-      });
-      debugger;
-      alert(data);
-      dispatch({ type: "REQUEST2_SUCCESS", payload: data });
-    } catch (err) {
-      dispatch({
-        type: "FETCH_FAIL",
-        payload: getError(err),
-      });
-    }
-  };
+  }, [userId, userInfo, idAccount]);
 
   const deleteHandler = async (user) => {
     if (window.confirm("Are you sure to delete?")) {
@@ -224,8 +209,49 @@ export default function AccountDetailScreen() {
           {idAccount ? <Pagos accountId={idAccount} /> : <div></div>}
         </Tab>
         <Tab eventKey="profile2" title="Configurar frequencia de pagos ">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Frequencia</th>
+                <th>Num credito</th>
+                <th>Monto de cobro</th>
+                <th>Monto de pago</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* {users.map((user) => (
+            <tr key={user._id}>
+              <td>{user.accountId.customerId.name}</td>
+              <td>{user.accountId.num}</td>
+              <td>{user.ammount}</td>
+              <td>{user.ammountPay}</td>
+              <td>{user.status}</td>
+
+            </tr>
+          ))} */}
+            </tbody>
+          </table>
           <Form>
             <div className="row">
+              <div className="col">
+                <Form.Group controlId="name">
+                  <Form.Label>Frequencias de pago</Form.Label>
+                  <Form.Select aria-label="Frequencias de pago">
+                    <option>Seleccione</option>
+                    <option value="Semanal">Semanal</option>
+                    <option value="Bi-Semanal">Bi Semanal</option>
+                    <option value="Quincenal">Quincenal</option>
+                    <option value="Mensual">Mensual</option>
+                  </Form.Select>
+                </Form.Group>
+                {}
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Cliente</Form.Label>
+
+                  <Form.Control type="Ammount" readOnly />
+                </Form.Group>
+              </div>
               <div className="col">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de configuracion</Form.Label>
@@ -235,18 +261,6 @@ export default function AccountDetailScreen() {
                   readOnly
                   onChange={(date) => setStartDate(date)}
                 />
-              </div>
-              <div className="col">
-                <Form.Group controlId="name">
-                  <Form.Label>Frequencias de pago</Form.Label>
-                  <Form.Select aria-label="Frequencias de pago">
-                    <option>Seleccione</option>
-                    <option value="1">Semanal</option>
-                    <option value="2">Bi Semanal</option>
-                    <option value="3">Quincenal</option>
-                    <option value="3">Mensual</option>
-                  </Form.Select>
-                </Form.Group>
               </div>
             </div>
           </Form>
@@ -282,11 +296,7 @@ export default function AccountDetailScreen() {
                 Guardar
               </Button>
               {/* <div className="col">
-                <Form.Group className="mb-3" controlId="email">
-                  <Form.Label>Cliente</Form.Label>
 
-                  <Form.Control type="Ammount" value={ammount} readOnly />
-                </Form.Group>
               </div>
               <div className="col">
                 <Form.Group className=" mb-3" controlId="phone">

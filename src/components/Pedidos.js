@@ -97,11 +97,10 @@ export default function Pedidos({ accountId }) {
   const { state } = useContext(Store);
   const { userInfo } = state;
   useEffect(() => {
-    debugger;
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos`, {
+        const { data } = await axios.get(url + `api/pedidos/` + accountId, {
           headers: { Authorization: `Bearer userInfo.token` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -128,6 +127,7 @@ export default function Pedidos({ accountId }) {
       <table className="table">
         <thead>
           <tr>
+            <th>Cliente</th>
             <th>Fecha</th>
             <th>Articulos</th>
             <th>Monto</th>
@@ -137,10 +137,12 @@ export default function Pedidos({ accountId }) {
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
+              <td>{user.accountId.customerId.name}</td>
+              <td>{user.date}</td>
               <td>{user.product}</td>
               <td>{user.cant}</td>
               <td>{user.ammount}</td>
-              <td>{user.date}</td>
+
               <td>
                 <Button
                   type="button"
@@ -212,6 +214,54 @@ export default function Pedidos({ accountId }) {
       </Modal>
     </div>
   ) : (
-    <div></div>
+    <div>
+      {" "}
+      <div>
+        <Button type="button" onClick={(e) => setShowModalPedido(true)}>
+          Agregar Pedido
+        </Button>
+        <h1>No hay datos asociados</h1>
+      </div>
+      <Modal show={showModalPedido} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Agregar pedido</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Articulos</Form.Label>
+              <Form.Control
+                onChange={(e) => setProduct(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Cantidad</Form.Label>
+              <Form.Control
+                type="email"
+                onChange={(e) => setCant(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="phone">
+              <Form.Label>Monto</Form.Label>
+              <Form.Control
+                type="phone"
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={deleteHandler}>
+            Agregar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
   );
 }

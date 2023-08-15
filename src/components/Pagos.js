@@ -16,8 +16,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-// const url = "http://localhost:5000/";
-const url = "https://pope-api.vercel.app/";
+const url = "http://localhost:5000/";
+// const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -59,7 +59,7 @@ export default function Pagos({ accountId }) {
   const navigate = useNavigate();
   const [product, setProduct] = useState("");
   const [cant, setCant] = useState("");
-
+  const [_id, setIdCharge] = useState("");
   const [ammount, setAmount] = useState("");
   const [
     { loading, error, users, pedidos, loadingDelete, successDelete },
@@ -68,6 +68,35 @@ export default function Pagos({ accountId }) {
     loading: true,
     error: "",
   });
+  const setChargeHandle = async (e, value) => {
+    if (window.confirm("Esta seguro proceder?")) {
+      debugger;
+      setIdCharge(value);
+      setShowModal(false);
+      e.preventDefault();
+      try {
+        dispatch({ type: "DELETE_REQUEST" });
+        const { data } = await axios.post(
+          url + "api/charges/makeCharge",
+          {
+            _id: _id,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${userInfo.token}`,
+            },
+          }
+        );
+        dispatch({
+          type: "DELETE_SUCCESS",
+        });
+        toast.success("Monto actualizado");
+      } catch (error) {
+        toast.error(getError(error));
+        dispatch({ type: "DELETE_FAIL" });
+      }
+    }
+  };
   const deleteHandler = async (user) => {
     setShowModal(false);
     try {
@@ -133,6 +162,7 @@ export default function Pagos({ accountId }) {
             <th>Num credito</th>
             <th>Monto de cobro</th>
             <th>Monto de pago</th>
+            <th>Estado</th>
             <th>ACTIONS</th>
           </tr>
         </thead>
@@ -143,6 +173,7 @@ export default function Pagos({ accountId }) {
               <td>{user.accountId.num}</td>
               <td>{user.ammount}</td>
               <td>{user.ammountPay}</td>
+              <td>{user.status}</td>
               <td>
                 <Button
                   type="button"
@@ -154,7 +185,7 @@ export default function Pagos({ accountId }) {
                 <Button
                   type="button"
                   variant="success"
-                  //   onClick={(e) => setChargeHandle(e, user._id)}
+                  onClick={(e) => setChargeHandle(e, user._id)}
                 >
                   Realizar pago
                 </Button>
@@ -173,7 +204,7 @@ export default function Pagos({ accountId }) {
           )} */}
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Agregar pedido</Modal.Title>
+          <Modal.Title>Agregar Pago</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>

@@ -8,6 +8,7 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from "../utils";
+import Clientes from "../../components/Clientes";
 
 const reducer = (state, action) => {
   debugger;
@@ -100,6 +101,7 @@ export default function CustomerListScreen() {
         <title>Clientes</title>
       </Helmet>
       <h1>Clientes</h1>
+      {/* <Clientes /> */}
       <Button
         type="button"
         variant="success"
