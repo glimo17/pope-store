@@ -14,7 +14,6 @@ import DatePicker from "react-datepicker";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
-import Autocomplete from "./Autocomplete";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
 // const url = "http://localhost:5000/";
@@ -161,69 +160,10 @@ export default function Pedidos({ accountId }) {
           <Form>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Articulos</Form.Label>
-              {/* <Autocomplete
-                suggestions={[
-                  "Alabama",
-                  "Alaska",
-                  "American Samoa",
-                  "Arizona",
-                  "Arkansas",
-                  "California",
-                  "Colorado",
-                  "Connecticut",
-                  "Delaware",
-                  "District Of Columbia",
-                  "Federated States Of Micronesia",
-                  "Florida",
-                  "Georgia",
-                  "Guam",
-                  "Hawaii",
-                  "Idaho",
-                  "Illinois",
-                  "Indiana",
-                  "Iowa",
-                  "Kansas",
-                  "Kentucky",
-                  "Louisiana",
-                  "Maine",
-                  "Marshall Islands",
-                  "Maryland",
-                  "Massachusetts",
-                  "Michigan",
-                  "Minnesota",
-                  "Mississippi",
-                  "Missouri",
-                  "Montana",
-                  "Nebraska",
-                  "Nevada",
-                  "New Hampshire",
-                  "New Jersey",
-                  "New Mexico",
-                  "New York",
-                  "North Carolina",
-                  "North Dakota",
-                  "Northern Mariana Islands",
-                  "Ohio",
-                  "Oklahoma",
-                  "Oregon",
-                  "Palau",
-                  "Pennsylvania",
-                  "Puerto Rico",
-                  "Rhode Island",
-                  "South Carolina",
-                  "South Dakota",
-                  "Tennessee",
-                  "Texas",
-                  "Utah",
-                  "Vermont",
-                  "Virgin Islands",
-                  "Virginia",
-                  "Washington",
-                  "West Virginia",
-                  "Wisconsin",
-                  "Wyoming",
-                ]}
-              /> */}
+              <Form.Control
+                onChange={(e) => setProduct(e.target.value)}
+                required
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Cantidad</Form.Label>
