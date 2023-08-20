@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.modal-height {
+  height: 70%;
+}
+
 input {
   border: 1px solid #999;
   padding: 8px;

@@ -41,6 +41,8 @@ import CustomerAddScreen from "./screens/customers/CustomerAddScreen";
 import AccoutAddScreen from "./screens/Accounts/AccoutAddScreen";
 import AccountDetailScreen from "./screens/Accounts/AccountDetailScreen";
 import MapScreen from "./screens/MapScreen";
+import PedidosListCreen from "./screens/Pedidos/PedidosListCreen";
+import PedidosAddScreen from "./screens/Pedidos/PedidosAddScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -133,6 +135,9 @@ function App() {
                     <NavDropdown title="Admin" id="admin-nav-dropdown">
                       <LinkContainer to="/admin/dashboard">
                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/pedidos">
+                        <NavDropdown.Item>Pedidos</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
                         <NavDropdown.Item>Productos</NavDropdown.Item>
@@ -279,6 +284,23 @@ function App() {
                 element={
                   <AdminRoute>
                     <AccoutAddScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/admin/pedidos/add"
+                element={
+                  <AdminRoute>
+                    <PedidosAddScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+
+              <Route
+                path="/admin/pedidos"
+                element={
+                  <AdminRoute>
+                    <PedidosListCreen />
                   </AdminRoute>
                 }
               ></Route>

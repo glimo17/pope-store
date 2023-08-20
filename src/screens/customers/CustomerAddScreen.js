@@ -39,10 +39,15 @@ export default function CustomerAddScreen() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [canton, setCanton] = useState("");
+  const [direc, setDirec] = useState("");
   const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 
+  const onchangeHandle = async (choice) => {
+    setCanton(choice.target.value);
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -53,6 +58,8 @@ export default function CustomerAddScreen() {
           name: name,
           email: email,
           phone: phone,
+          canton: canton,
+          direc: direc,
         },
         {
           headers: {
@@ -100,6 +107,43 @@ export default function CustomerAddScreen() {
           <Form.Control
             type="phone"
             onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="phone">
+          <Form.Label>Lugares</Form.Label>
+          <Form.Select
+            name="canton"
+            onChange={(choice) => onchangeHandle(choice)}
+            aria-label="Frequencias de pago"
+          >
+            <option>Seleccione</option>
+            <option value="San Joaquin">San Joaquin</option>
+            <option value="Alajuela">Alajuela</option>
+            <option value="Nandayure">Nandayure</option>
+            <option value="Nicoya">Nicoya</option>
+            <option value="Pueblo viejo">Pueblo viejo</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="phone">
+          <Form.Label>Tipo de cliente </Form.Label>
+          <Form.Select
+            name="canton"
+            onChange={(choice) => onchangeHandle(choice)}
+            aria-label="Frequencias de pago"
+          >
+            <option>Seleccione</option>
+            <option value="San Joaquin">nuevo</option>
+            <option value="Alajuela">Regular</option>
+            <option value="Nandayure">Limitado</option>
+            <option value="Nicoya">Premium</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="phone">
+          <Form.Label>Reseña</Form.Label>
+          <Form.Control
+            type="text"
+            onChange={(e) => setDirec(e.target.value)}
             required
           />
         </Form.Group>

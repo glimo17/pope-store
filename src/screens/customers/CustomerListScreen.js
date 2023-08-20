@@ -101,7 +101,7 @@ export default function CustomerListScreen() {
         <title>Clientes</title>
       </Helmet>
       <h1>Clientes</h1>
-      {/* <Clientes /> */}
+
       <Button
         type="button"
         variant="success"

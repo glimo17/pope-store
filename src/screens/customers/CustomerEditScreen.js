@@ -10,7 +10,8 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from ".././utils";
-const url = "https://pope-api.vercel.app/";
+const url = "http://localhost:5000";
+// const url = "https://pope-api.vercel.app";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_REQUEST":
@@ -45,18 +46,29 @@ export default function CustomerEditScreen() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [canton, setCanton] = useState("");
+  const [direc, setDirec] = useState("");
+
+  const onchangeHandle = async (choice) => {
+    setCanton(choice.target.value);
+  };
 
   useEffect(() => {
+    debugger;
+
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(url + `/api/customers/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
+        debugger;
         setName(data.name);
         setEmail(data.email);
         setPhone(data.phone);
+        setCanton(data.canton);
+        setDirec(data.direc);
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
         dispatch({
@@ -74,7 +86,7 @@ export default function CustomerEditScreen() {
       dispatch({ type: "UPDATE_REQUEST" });
       await axios.put(
         url + `/api/customers/${userId}`,
-        { _id: userId, name, email, phone },
+        { _id: userId, name, email, phone, canton, direc },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -119,7 +131,22 @@ export default function CustomerEditScreen() {
               required
             />
           </Form.Group>
-
+          <Form.Group className="mb-3" controlId="phone">
+            <Form.Label>Canton</Form.Label>
+            <Form.Select
+              name="canton"
+              value={canton}
+              onChange={(choice) => onchangeHandle(choice)}
+              aria-label="Frequencias de pago"
+            >
+              <option>Seleccione</option>
+              <option value="San Joaquin">San Joaquin</option>
+              <option value="Alajuela">Alajuela</option>
+              <option value="Nandayure">Nandayure</option>
+              <option value="Nicoya">Nicoya</option>
+              <option value="Pueblo viejo">Pueblo viejo</option>
+            </Form.Select>
+          </Form.Group>
           <Form.Group className="mb-3" controlId="phone">
             <Form.Label>Telefono</Form.Label>
             <Form.Control

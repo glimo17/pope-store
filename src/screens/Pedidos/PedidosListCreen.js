@@ -1,11 +1,11 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import Rating from "./Rating";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Store } from "../Store";
-import { getError } from "../screens/utils";
+import { Store } from "../../Store";
+import { getError } from "../../screens/utils";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
 import Tab from "react-bootstrap/Tab";
@@ -50,7 +50,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
-export default function Pedidos({ accountId }) {
+export default function PedidosListCreen() {
   debugger;
   const handleClose = () => setShowModalPedido(false);
   const handleShow = () => setShowModalPedido(true);
@@ -59,7 +59,7 @@ export default function Pedidos({ accountId }) {
   const navigate = useNavigate();
   const [product, setProduct] = useState("");
   const [cant, setCant] = useState("");
-
+  const [accountId, setAccountId] = useState("");
   const [ammount, setAmount] = useState("");
   const [
     { loading, error, users, pedidos, loadingDelete, successDelete },
@@ -100,7 +100,7 @@ export default function Pedidos({ accountId }) {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos/` + accountId, {
+        const { data } = await axios.get(url + `api/pedidos/`, {
           headers: { Authorization: `Bearer userInfo.token` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -121,14 +121,14 @@ export default function Pedidos({ accountId }) {
   return users ? (
     <div>
       {" "}
-      <Button type="button" onClick={(e) => setShowModalPedido(true)}>
+      <Button type="button" onClick={() => navigate(`/admin/pedidos/add`)}>
         Agregar Pedido
       </Button>
       <table className="table">
         <thead>
           <tr>
-            <th>Fecha</th>
-            <th>Articulos</th>
+            <th>Cliente</th>
+            <th>Articulo</th>
             <th>Cant</th>
             <th>Monto</th>
           </tr>
@@ -136,10 +136,9 @@ export default function Pedidos({ accountId }) {
         <tbody>
           {users.map((user) => (
             <tr key={user._id}>
-              <td>{user.date}</td>
+              <td>{user.accountId.customerId.name}</td>
               <td>{user.product}</td>
-              <td>{user.cant}</td>
-              <td>{user.ammount}</td>
+              <td>{user.sta}</td>
             </tr>
           ))}
         </tbody>
@@ -152,12 +151,45 @@ export default function Pedidos({ accountId }) {
           ) : (
      
           )} */}
-      <Modal show={showModalPedido} onHide={handleClose}>
+      <Modal
+        dialogClassName="modal-width"
+        show={showModalPedido}
+        onHide={handleClose}
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Agregar pedido</Modal.Title>
+          <Modal.Title>Agregar nuevo pedido</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Form.Group className="mb-9" controlId="phone">
+              <Form.Label>Lugar de compra</Form.Label>
+              <Form.Select
+                name="canton"
+                // onChange={(choice) => onchangeHandle(choice)}
+                aria-label="Frequencias de pago"
+              >
+                <option>Seleccione</option>
+                <option value="San Jose">San Jose</option>
+                <option value="Panama">Panama</option>
+                <option value="USA">USA</option>
+                <option value="Nicoya">Nicoya</option>
+                <option value="Pueblo viejo">Pueblo viejo</option>
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-6" controlId="name">
+              <Form.Label>Cliente</Form.Label>
+              <Form.Control
+                // value={nameCustomer}
+                // onChange={(e) => setNameCustomer(e.target.value)}
+                required
+              />
+              <Button
+                variant="primary"
+                // onClick={handleShow}
+              >
+                Sellecione el cliente
+              </Button>
+            </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Articulos</Form.Label>
               <Form.Control
