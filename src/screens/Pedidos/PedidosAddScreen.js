@@ -56,6 +56,7 @@ export default function PedidosAddScreen() {
   const [startDate, setStartDate] = useState(new Date());
 
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
   const [value, setValue] = useState("");
   const [idCustomer, setIdCustomer] = useState("");
