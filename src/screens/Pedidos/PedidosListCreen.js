@@ -64,7 +64,7 @@ export default function PedidosListCreen() {
   const [accountId, setAccountId] = useState("");
   const [ammount, setAmount] = useState("");
   const [status, setStatus] = useState("Ingresado");
-  
+
   const [
     { loading, error, users, pedidos, pages, loadingDelete, successDelete },
     dispatch,
@@ -100,6 +100,10 @@ export default function PedidosListCreen() {
   };
   const { state } = useContext(Store);
   const { userInfo } = state;
+
+  const onchangeFilter = async (choice) => {
+    setStatus(choice.target.value);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,7 +124,7 @@ export default function PedidosListCreen() {
     } else {
       fetchData();
     }
-  }, [userInfo, successDelete]);
+  }, [userInfo, successDelete, status]);
 
   return users ? (
     <div>
@@ -140,13 +144,13 @@ export default function PedidosListCreen() {
               <Form.Label>Estado</Form.Label>
               <Form.Select
                 name="canton"
-                // onChange={(choice) => onchangeLugar(choice)}
+                onChange={(choice) => onchangeFilter(choice)}
                 aria-label="Frequencias de pago"
               >
-                <option value="San Jose">Ingresado</option>
-                <option value="Panama">Comprado</option>
-                <option value="USA">Entregar</option>
-                <option value="USA">Entregado</option>
+                <option value="Ingresado">Ingresado</option>
+                <option value="Comprado">Comprado</option>
+                <option value="Entregar">Entregar</option>
+                <option value="Entregado">Entregado</option>
               </Form.Select>
             </Form.Group>
           </div>
@@ -157,6 +161,7 @@ export default function PedidosListCreen() {
                 <th>Articulo</th>
                 <th>Fecha creacion</th>
                 <th>Estado</th>
+                <th>Accion</th>
               </tr>
             </thead>
             <tbody>
@@ -166,6 +171,15 @@ export default function PedidosListCreen() {
                   <td>{user.product}</td>
                   <td>{user.date}</td>
                   <td>{user.status}</td>
+                  <td>
+                    <Button
+                      type="button"
+                      variant="success"
+                      // onClick={async () => setIdCustomerHandle(user)}
+                    >
+                      Continuar
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
