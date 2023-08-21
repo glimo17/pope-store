@@ -156,6 +156,11 @@ export default function PedidosEditScreen() {
         setDetalle(data.detalle);
         setTipoPago(data.tipoPago);
         setLugar(data.lugar);
+        setMontoPrima(data.montoPrima);
+        setmontoDolar(data.montoDolar);
+        setMontoCosto(data.montoCosto);
+        setMontDescuento(data.descuento);
+        setMontoVenta(data.montoVenta);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
