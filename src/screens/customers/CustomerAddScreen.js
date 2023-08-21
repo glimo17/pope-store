@@ -42,12 +42,19 @@ export default function CustomerAddScreen() {
   const [phone, setPhone] = useState("");
   const [canton, setCanton] = useState("");
   const [direc, setDirec] = useState("");
+  const [oficio, setOficio] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
 
-  // const url = "http://localhost:5000";
-  const url = "https://pope-api.vercel.app";
+  const url = "http://localhost:5000";
+  // const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 
   const onchangeHandle = async (choice) => {
+    setTipo(choice.target.value);
+  };
+
+  const onchangeHandleLugar = async (choice) => {
     setCanton(choice.target.value);
   };
   const submitHandler = async (e) => {
@@ -62,6 +69,9 @@ export default function CustomerAddScreen() {
           phone: phone,
           canton: canton,
           direc: direc,
+          oficio: oficio,
+          fechaNacimiento: fechaNacimiento,
+          tipo: tipo,
         },
         {
           headers: {
@@ -116,7 +126,7 @@ export default function CustomerAddScreen() {
           <Form.Label>Lugares</Form.Label>
           <Form.Select
             name="canton"
-            onChange={(choice) => onchangeHandle(choice)}
+            onChange={(choice) => onchangeHandleLugar(choice)}
             aria-label="Frequencias de pago"
           >
             <option>Seleccione</option>
@@ -135,28 +145,24 @@ export default function CustomerAddScreen() {
             aria-label="Frequencias de pago"
           >
             <option>Seleccione</option>
-            <option value="San Joaquin">nuevo</option>
-            <option value="Alajuela">Regular</option>
-            <option value="Nandayure">Limitado</option>
-            <option value="Nicoya">Premium</option>
+            <option value="nuevo">nuevo</option>
+            <option value="Regular">Regular</option>
+            <option value="Limitado">Limitado</option>
+            <option value="Premium">Premium</option>
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="phone">
           <Form.Label>Fecha Nacimieto</Form.Label>
           <Form.Control
             type="date"
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setFechaNacimiento(e.target.value)}
             required
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="phone">
           <Form.Label>Oficio</Form.Label>
-          <Form.Control
-            type="phone"
-            onChange={(e) => setPhone(e.target.value)}
-            required
-          />
+          <Form.Control onChange={(e) => setOficio(e.target.value)} required />
         </Form.Group>
         <div className="mb-3">
           <Button type="submit" variant="outline-primary">

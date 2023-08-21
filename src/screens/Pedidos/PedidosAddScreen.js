@@ -12,6 +12,7 @@ import { Store } from "../../Store";
 import Modal from "react-bootstrap/Modal";
 import { getError } from ".././utils";
 import DatePicker from "react-datepicker";
+import Cliente from "../../components/Clientes";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -81,7 +82,7 @@ export default function PedidosAddScreen() {
   const [montoVenta, setMontoVenta] = useState(0);
   const [lugar, setLugar] = useState(0);
   const [tcNum, setTcNum] = useState("");
-
+  const [tipoCliente, setTipoCliente] = useState("");
   const [isSanJose, setIsSanJose] = useState({
     id: "divOne3",
   });
@@ -159,6 +160,8 @@ export default function PedidosAddScreen() {
         const { data } = await axios.get(url + `api/customers`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
+
+        setTipoCliente(data.accountId.customerId.tipo);
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({
@@ -251,14 +254,7 @@ export default function PedidosAddScreen() {
                 <Form.Control onClick={handleShow} value={nameCustomer} />
               </Form.Group>
             </div>
-            {/* <div className="col-3">
-              <Form.Group className="mb-5">
-                <Form.Label></Form.Label>
-                <Button variant="primary" onClick={handleShow}>
-                  Sellecione el cliente
-                </Button>
-              </Form.Group>
-            </div> */}
+            <div className="col-3"></div>
             <div className="col-3">
               <Form.Group>
                 <Form.Label>Fecha creacion</Form.Label>
