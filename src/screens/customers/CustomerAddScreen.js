@@ -46,8 +46,8 @@ export default function CustomerAddScreen() {
   const [tipo, setTipo] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
 
-  const url = "http://localhost:5000";
-  // const url = "https://pope-api.vercel.app";
+  // const url = "http://localhost:5000";
+  const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 
   const onchangeHandle = async (choice) => {

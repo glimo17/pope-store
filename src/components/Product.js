@@ -1,10 +1,10 @@
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
-import Rating from './Rating';
-import axios from 'axios';
-import { useContext } from 'react';
-import { Store } from '../Store';
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
+import Rating from "./Rating";
+import axios from "axios";
+import { useContext } from "react";
+import { Store } from "../Store";
 
 export default function Product(props) {
   const { product } = props;
@@ -18,11 +18,11 @@ export default function Product(props) {
     const quantity = itemExist ? itemExist.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
-      window.alert('Sorry. Product is out of stock');
+      window.alert("Sorry. Product is out of stock");
       return;
     }
     ctxDispatch({
-      type: 'CART_ADD_ITEM',
+      type: "CART_ADD_ITEM",
       payload: { ...item, quantity },
     });
   };
@@ -36,7 +36,7 @@ export default function Product(props) {
         <Link to={`/product/${product.slug}`}>
           <Card.Title>{product.name}</Card.Title>
         </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
+        {/* <Rating rating={product.rating} numReviews={product.numReviews} /> */}
         <Card.Text>
           <strong>
             GH₵
@@ -44,7 +44,7 @@ export default function Product(props) {
           </strong>
         </Card.Text>
         <div className="d-grid gap-2">
-          {product.countInStock === 0 ? (
+          {/* {product.countInStock === 0 ? (
             <Button variant="light" disabled>
               Out of stock
             </Button>
@@ -53,9 +53,16 @@ export default function Product(props) {
               variant="outline-primary"
               onClick={() => addToCartHandler(product)}
             >
-              Add to cart
+              Realizar pedido
             </Button>
-          )}
+          )} */}
+
+          <Button
+            variant="outline-primary"
+            onClick={() => addToCartHandler(product)}
+          >
+            Realizar pedido
+          </Button>
         </div>
       </Card.Body>
     </Card>

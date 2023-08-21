@@ -98,13 +98,14 @@ export default function PedidosEditScreen() {
     setShow(false);
   };
 
-  // const url = "http://localhost:5000/";
+  // // const url = "http://localhost:5000/";
   const url = "https://pope-api.vercel.app/";
 
   const onchangeGanancia = async (value) => {
+    debugger;
+    setMontoVenta(value);
     let x = value - montoCosto;
     setMontoGanancia(x);
-    setMontoVenta(value);
   };
   const onchangeDescuento = async (value) => {
     debugger;
@@ -166,6 +167,7 @@ export default function PedidosEditScreen() {
         setproveedor(data.proveedor);
         setNumFactura(data.numFactura);
         setMontoGanancia(data.montoGanancia);
+        setCodigo(data.codigo);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
@@ -240,11 +242,9 @@ export default function PedidosEditScreen() {
               <Form.Group className="mb-5" controlId="lugar">
                 <Form.Label>Lugar de compra</Form.Label>
                 <Form.Select
-                  name="canton"
+                  name="lugar"
                   value={lugar}
-                  reaonly
                   onChange={(choice) => onchangeLugar(choice)}
-                  aria-label="Frequencias de pago"
                 >
                   <option>Seleccione</option>
                   <option value="San Jose">San Jose</option>

@@ -20,7 +20,7 @@ const reducer = (state, action) => {
   }
 };
 
-const url ="https://pope-api.vercel.app/";
+const url = "https://pope-api.vercel.app/";
 export default function HomeScreen() {
   const [{ loading, error, products }, dispatch] = useReducer(reducer, {
     products: [],
@@ -32,9 +32,7 @@ export default function HomeScreen() {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const result = await axios.get(
-          url+ "api/products"
-        );
+        const result = await axios.get(url + "api/products");
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (error) {
         dispatch({ type: "FETCH_FAIL", payload: error.message });
@@ -48,7 +46,7 @@ export default function HomeScreen() {
       <Helmet>
         <title>Pope Store</title>
       </Helmet>
-      <h1>Featured Products</h1>
+      <h1>Productos</h1>
       <div className="products">
         {loading ? (
           <LoadingBox />
