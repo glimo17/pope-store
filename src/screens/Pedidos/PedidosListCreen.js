@@ -8,11 +8,8 @@ import { Store } from "../../Store";
 import { getError } from "../../screens/utils";
 import Form from "react-bootstrap/Form";
 import { toast } from "react-toastify";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-import DatePicker from "react-datepicker";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
 import Modal from "react-bootstrap/Modal";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
@@ -124,34 +121,33 @@ export default function PedidosListCreen() {
       <Button type="button" onClick={() => navigate(`/admin/pedidos/add`)}>
         Agregar Pedido
       </Button>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Cliente</th>
-            <th>Articulo</th>
-            <th>Fecha creacion</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td>{user.accountId.customerId.name}</td>
-              <td>{user.product}</td>
-              <td>{user.date}</td>
-              <td>{user.status}</td>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {loading ? (
+        <LoadingBox></LoadingBox>
+      ) : error ? (
+        <MessageBox variant="danger">{error}</MessageBox>
+      ) : (
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Articulo</th>
+              <th>Fecha creacion</th>
+              <th>Estado</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* {loadingDelete && <LoadingBox></LoadingBox>}
-          {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-     
-          )} */}
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user.accountId.customerId.name}</td>
+                <td>{user.product}</td>
+                <td>{user.date}</td>
+                <td>{user.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <Modal
         dialogClassName="modal-width"
         show={showModalPedido}

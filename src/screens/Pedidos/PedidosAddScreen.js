@@ -186,7 +186,7 @@ export default function PedidosAddScreen() {
           montoVenta: montoVenta,
           montoGanancia: montoGanancia,
           cant: cant,
-          tcNum:tcNum,
+          tcNum: tcNum,
           fechaCreacion: fechaCreacion,
           fechaEntrega: fechaEntrega,
           fechaCompra: fechaCompra,
@@ -424,18 +424,15 @@ export default function PedidosAddScreen() {
               <Form.Group controlId="name">
                 <Form.Label>Fecha compra</Form.Label>
               </Form.Group>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setFechaCompra(date)}
-              />
+              <DatePicker onChange={(date) => setFechaCompra(date)} />
             </div>
             <div className="col-4">
               <Form.Group controlId="name">
                 <Form.Label>Fecha entrega</Form.Label>
               </Form.Group>
               <DatePicker
-                selected={startDate}
-                onChange={(date) => setFechaEntrega(date)}
+                value={fechaEntrega}
+                onChange={(date) => setFechaEntrega(date.target.value)}
               />
             </div>
           </div>
