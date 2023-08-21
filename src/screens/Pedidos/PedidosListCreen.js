@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Store } from "../../Store";
 import { getError } from "../../screens/utils";
 import Form from "react-bootstrap/Form";
@@ -26,6 +26,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         users: action.payload,
+        page: action.payload.page,
+        pages: action.payload.pages,
         loading: false,
       };
     case "FETCH_FAIL":
@@ -54,12 +56,17 @@ export default function PedidosListCreen() {
   const [showModalPedido, setShowModalPedido] = useState(false);
   const [showModalPago, setShowModalPago] = useState(false);
   const navigate = useNavigate();
+  const { search } = useLocation();
+  const sp = new URLSearchParams(search);
+  const page = sp.get("page") || 1;
   const [product, setProduct] = useState("");
   const [cant, setCant] = useState("");
   const [accountId, setAccountId] = useState("");
   const [ammount, setAmount] = useState("");
+  const [status, setStatus] = useState("Ingresado");
+  
   const [
-    { loading, error, users, pedidos, loadingDelete, successDelete },
+    { loading, error, users, pedidos, pages, loadingDelete, successDelete },
     dispatch,
   ] = useReducer(reducer, {
     loading: true,
@@ -97,7 +104,7 @@ export default function PedidosListCreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos/`, {
+        const { data } = await axios.get(url + `api/pedidos/filter/` + status, {
           headers: { Authorization: `Bearer userInfo.token` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -127,27 +134,53 @@ export default function PedidosListCreen() {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Cliente</th>
-              <th>Articulo</th>
-              <th>Fecha creacion</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.accountId.customerId.name}</td>
-                <td>{user.product}</td>
-                <td>{user.date}</td>
-                <td>{user.status}</td>
+        <div>
+          <div className="col-9">
+            <Form.Group className="mb-5" controlId="phone">
+              <Form.Label>Estado</Form.Label>
+              <Form.Select
+                name="canton"
+                // onChange={(choice) => onchangeLugar(choice)}
+                aria-label="Frequencias de pago"
+              >
+                <option value="San Jose">Ingresado</option>
+                <option value="Panama">Comprado</option>
+                <option value="USA">Entregar</option>
+                <option value="USA">Entregado</option>
+              </Form.Select>
+            </Form.Group>
+          </div>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Articulo</th>
+                <th>Fecha creacion</th>
+                <th>Estado</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.accountId.customerId.name}</td>
+                  <td>{user.product}</td>
+                  <td>{user.date}</td>
+                  <td>{user.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
+      {[...Array(pages).keys()].map((x) => (
+        <Link
+          className={x + 1 === Number(page) ? "btn text-bold" : "btn"}
+          key={x + 1}
+          to={`/admin/products?page=${x + 1}`}
+        >
+          {x + 1}
+        </Link>
+      ))}
       <Modal
         dialogClassName="modal-width"
         show={showModalPedido}
