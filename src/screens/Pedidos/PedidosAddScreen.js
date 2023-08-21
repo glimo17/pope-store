@@ -90,14 +90,17 @@ export default function PedidosAddScreen() {
     id: "divOne3",
   });
 
+  const [isModalProcut, setIsModalProcut] = useState({
+    id: "divOne",
+  });
+
   const setIdCustomerHandle = async (value) => {
-    debugger;
     setIdCustomer(value._id);
     setNameCustomer(value.name);
     setShow(false);
   };
 
-  //   const url = "http://localhost:5000/";
+  // const url = "http://localhost:5000/";
   const url = "https://pope-api.vercel.app/";
 
   const onchangeGanancia = async (value) => {
@@ -105,14 +108,12 @@ export default function PedidosAddScreen() {
     setMontoGanancia(x);
   };
   const onchangeDescuento = async (value) => {
-    debugger;
     let v = (montoCosto * value) / 100;
     let y = Number(montoGanancia) + Number(v);
     setMontoGanancia(y);
     setMontDescuento(value);
   };
   const onchangeLugar = async (choice) => {
-    debugger;
     setLugar(choice.target.value);
     if (choice.target.value == "San Jose") {
       setIsSanJose({
@@ -124,20 +125,34 @@ export default function PedidosAddScreen() {
       });
     }
   };
+
+  const onchangeModalProuct = async (choice) => {
+    debugger;
+    setLugar(choice.target.value);
+    if (choice.target.value == "1") {
+      setIsModalProcut({
+        id: "divOne3",
+      });
+    } else {
+      setIsSanJose({
+        id: "divOne",
+      });
+    }
+  };
+
   const onchangeTipoPago = async (choice) => {
     setTipoPago(choice.target.value);
     if (choice.target.value == "Tarjeta") {
       setIsTc({
-        id: "divOne",
+        id: "divOne3",
       });
     } else {
       setIsTc({
-        id: "divOne3",
+        id: "divOne",
       });
     }
   };
   useEffect(() => {
-    debugger;
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
@@ -164,7 +179,6 @@ export default function PedidosAddScreen() {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    debugger;
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
@@ -234,42 +248,53 @@ export default function PedidosAddScreen() {
             <div className="col-3">
               <Form.Group className="mb-5">
                 <Form.Label>Cliente</Form.Label>
-                <Form.Control value={nameCustomer} />
+                <Form.Control onClick={handleShow} value={nameCustomer} />
               </Form.Group>
             </div>
-            <div className="col-3">
+            {/* <div className="col-3">
               <Form.Group className="mb-5">
                 <Form.Label></Form.Label>
                 <Button variant="primary" onClick={handleShow}>
                   Sellecione el cliente
                 </Button>
               </Form.Group>
-            </div>
+            </div> */}
             <div className="col-3">
               <Form.Group>
                 <Form.Label>Fecha creacion</Form.Label>
+
+                <Form.Control
+                  type="date"
+                  onChange={(e) => setFechaCreacion(e.target.value)}
+                  required
+                />
               </Form.Group>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => date(date)}
-              />
             </div>
           </div>
           <h2>Detalle Articulo</h2>
           <div className="row">
-            <div className="col-4">
-              <Form.Check // prettier-ignore
-                type="switch"
-                id="custom-switch"
-                label="Conozco el producto"
-              />
-            </div>
+            {/* <div className="col-4">
+              <Form.Group className="mb-5" controlId="lugar">
+                <Form.Label>Conozco el producto</Form.Label>
+                <Form.Select
+                  name="canton"
+                  onChange={(choice) => onchangeModalProuct(choice)}
+                  aria-label="Frequencias de pago"
+                >
+                  <option>Seleccione</option>
+                  <option value="1">Si</option>
+                  <option value="2">No</option>
+                </Form.Select>
+              </Form.Group>
+            </div> */}
+
             <div className="col-4">
               <Form.Group className="mb-3" controlId="namee">
                 <Form.Label>Articulo</Form.Label>
                 <Form.Control onChange={(e) => setProduct(e.target.value)} />
               </Form.Group>
             </div>
+
             <div className="col-4">
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Marca</Form.Label>
@@ -399,17 +424,21 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group>
                 <Form.Label>Fecha compra</Form.Label>
+                <Form.Control
+                  type="date"
+                  onChange={(e) => setFechaCompra(e.target.value)}
+                />
               </Form.Group>
-              <DatePicker onChange={(date) => setFechaCompra(date)} />
             </div>
             <div className="col-4">
               <Form.Group>
                 <Form.Label>Fecha entrega</Form.Label>
+
+                <Form.Control
+                  type="date"
+                  onChange={(e) => setFechaEntrega(e.target.value)}
+                />
               </Form.Group>
-              <DatePicker
-                value={fechaEntrega}
-                onChange={(date) => setFechaEntrega(date.target.value)}
-              />
             </div>
           </div>
           <div className="mb-3">

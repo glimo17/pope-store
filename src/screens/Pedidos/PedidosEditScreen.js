@@ -80,7 +80,7 @@ export default function PedidosEditScreen() {
   const [marca, setMarca] = useState("");
   const [montoCosto, setMontoCosto] = useState(0);
   const [montoVenta, setMontoVenta] = useState(0);
-  const [lugar, setLugar] = useState(0);
+  const [lugar, setLugar] = useState("");
   const [tcNum, setTcNum] = useState("");
 
   const [isSanJose, setIsSanJose] = useState({
@@ -177,8 +177,9 @@ export default function PedidosEditScreen() {
     try {
       dispatch({ type: "UPDATE_REQUEST" });
       const { data } = await axios.post(
-        url + "api/pedidos",
+        url + "api/pedidos/update",
         {
+          id: userId,
           customerId: customerId,
           product: product,
           proveedor: proveedor,
@@ -431,10 +432,14 @@ export default function PedidosEditScreen() {
               />
             </div>
           </div>
-          <div className="mb-3">
-            <Button type="submit" variant="outline-primary">
-              Agregar
-            </Button>
+          <div className="row">
+            <div className="col-4">
+              <Form.Group>
+                <Button type="submit" variant="outline-primary">
+                  Actualizar Pedido
+                </Button>
+              </Form.Group>
+            </div>
           </div>
         </Form>
       </div>

@@ -42,6 +42,8 @@ export default function CustomerAddScreen() {
   const [phone, setPhone] = useState("");
   const [canton, setCanton] = useState("");
   const [direc, setDirec] = useState("");
+
+  // const url = "http://localhost:5000";
   const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 
@@ -140,14 +142,22 @@ export default function CustomerAddScreen() {
           </Form.Select>
         </Form.Group>
         <Form.Group className="mb-3" controlId="phone">
-          <Form.Label>Reseña</Form.Label>
+          <Form.Label>Fecha Nacimieto</Form.Label>
           <Form.Control
-            type="text"
-            onChange={(e) => setDirec(e.target.value)}
+            type="date"
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
         </Form.Group>
 
+        <Form.Group className="mb-3" controlId="phone">
+          <Form.Label>Oficio</Form.Label>
+          <Form.Control
+            type="phone"
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </Form.Group>
         <div className="mb-3">
           <Button type="submit" variant="outline-primary">
             Agregar

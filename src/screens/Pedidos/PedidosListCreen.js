@@ -56,6 +56,7 @@ export default function PedidosListCreen() {
   const [showModalPedido, setShowModalPedido] = useState(false);
   const [showModalPago, setShowModalPago] = useState(false);
   const navigate = useNavigate();
+  const [lugar, setLugar] = useState("");
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const page = sp.get("page") || 1;
@@ -72,6 +73,11 @@ export default function PedidosListCreen() {
     loading: true,
     error: "",
   });
+
+  const onchangeLugar = async (choice) => {
+    debugger;
+    setLugar(choice.target.value);
+  };
   const deleteHandler = async (user) => {
     setShowModalPedido(false);
     try {
@@ -139,20 +145,39 @@ export default function PedidosListCreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <div className="col-9">
-            <Form.Group className="mb-5" controlId="phone">
-              <Form.Label>Estado</Form.Label>
-              <Form.Select
-                name="canton"
-                onChange={(choice) => onchangeFilter(choice)}
-                aria-label="Frequencias de pago"
-              >
-                <option value="Ingresado">Ingresado</option>
-                <option value="Comprado">Comprado</option>
-                <option value="Entregar">Entregar</option>
-                <option value="Entregado">Entregado</option>
-              </Form.Select>
-            </Form.Group>
+          <div className="row">
+            <div className="col-4">
+              <Form.Group className="mb-5" controlId="phone">
+                <Form.Label>Estado</Form.Label>
+                <Form.Select
+                  name="canton"
+                  onChange={(choice) => onchangeFilter(choice)}
+                  aria-label="Frequencias de pago"
+                >
+                  <option value="Ingresado">Ingresado</option>
+                  <option value="Comprado">Comprado</option>
+                  <option value="Entregar">Entregar</option>
+                  <option value="Entregado">Entregado</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-5" controlId="phone">
+                <Form.Label>Lugar de compra</Form.Label>
+                <Form.Select
+                  name="canton"
+                  value={lugar}
+                  reaonly
+                  onChange={(choice) => onchangeLugar(choice)}
+                  aria-label="Frequencias de pago"
+                >
+                  <option>Seleccione</option>
+                  <option value="San Jose">San Jose</option>
+                  <option value="Panama">Panama</option>
+                  <option value="USA">USA</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
           </div>
           <table className="table">
             <thead>
@@ -195,79 +220,6 @@ export default function PedidosListCreen() {
           {x + 1}
         </Link>
       ))}
-      <Modal
-        dialogClassName="modal-width"
-        show={showModalPedido}
-        onHide={handleClose}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar nuevo pedido</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-9" controlId="phone">
-              <Form.Label>Lugar de compra</Form.Label>
-              <Form.Select
-                name="canton"
-                // onChange={(choice) => onchangeHandle(choice)}
-                aria-label="Frequencias de pago"
-              >
-                <option>Seleccione</option>
-                <option value="San Jose">San Jose</option>
-                <option value="Panama">Panama</option>
-                <option value="USA">USA</option>
-                <option value="Nicoya">Nicoya</option>
-                <option value="Pueblo viejo">Pueblo viejo</option>
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="mb-6" controlId="cliente">
-              <Form.Label>Cliente</Form.Label>
-              <Form.Control
-                // value={nameCustomer}
-                // onChange={(e) => setNameCustomer(e.target.value)}
-                required
-              />
-              <Button
-                variant="primary"
-                // onClick={handleShow}
-              >
-                Sellecione el cliente
-              </Button>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="product">
-              <Form.Label>Articulos</Form.Label>
-              <Form.Control
-                onChange={(e) => setProduct(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="camt">
-              <Form.Label>Cantidad</Form.Label>
-              <Form.Control
-                type="cant"
-                onChange={(e) => setCant(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phone">
-              <Form.Label>Monto</Form.Label>
-              <Form.Control
-                type="phone"
-                onChange={(e) => setAmount(e.target.value)}
-                required
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={deleteHandler}>
-            Agregar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   ) : (
     <div>
@@ -278,46 +230,6 @@ export default function PedidosListCreen() {
         </Button>
         <h1>No hay datos asociados</h1>
       </div>
-      <Modal show={showModalPedido} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar pedido</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Articulos</Form.Label>
-              <Form.Control
-                onChange={(e) => setProduct(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Cantidad</Form.Label>
-              <Form.Control
-                type="email"
-                onChange={(e) => setCant(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="phone">
-              <Form.Label>Monto</Form.Label>
-              <Form.Control
-                type="phone"
-                onChange={(e) => setAmount(e.target.value)}
-                required
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={deleteHandler}>
-            Agregar
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }
