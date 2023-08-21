@@ -217,7 +217,7 @@ export default function PedidosAddScreen() {
         <Form onSubmit={submitHandler}>
           <div className="row">
             <div className="col-3">
-              <Form.Group className="mb-5" controlId="phone">
+              <Form.Group className="mb-5" controlId="lugar">
                 <Form.Label>Lugar de compra</Form.Label>
                 <Form.Select
                   name="canton"
@@ -234,7 +234,7 @@ export default function PedidosAddScreen() {
             <div className="col-3">
               <Form.Group className="mb-5" controlId="name">
                 <Form.Label>Cliente</Form.Label>
-                <Form.Control value={nameCustomer} required />
+                <Form.Control value={nameCustomer} />
               </Form.Group>
             </div>
             <div className="col-3">
@@ -251,7 +251,6 @@ export default function PedidosAddScreen() {
               </Form.Group>
               <DatePicker
                 selected={startDate}
-                readOnly
                 onChange={(date) => date(date)}
               />
             </div>
@@ -268,10 +267,7 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-3" controlId="namee">
                 <Form.Label>Articulo</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setProduct(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
@@ -285,28 +281,19 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Talla-Capacidad</Form.Label>
-                <Form.Control
-                  onChange={(e) => settalla(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => settalla(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Proveedor</Form.Label>
-                <Form.Control
-                  onChange={(e) => setproveedor(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setproveedor(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Codigo</Form.Label>
-                <Form.Control
-                  onChange={(e) => setCodigo(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setCodigo(e.target.value)} />
               </Form.Group>
             </div>
           </div>
@@ -318,7 +305,6 @@ export default function PedidosAddScreen() {
                 <Form.Control
                   onChange={(e) => setMontoCosto(e.target.value)}
                   value={montoCosto}
-                  required
                 />
               </Form.Group>
             </div>
@@ -327,7 +313,6 @@ export default function PedidosAddScreen() {
                 <Form.Label>Precio venta</Form.Label>
                 <Form.Control
                   onChange={(e) => onchangeGanancia(e.target.value)}
-                  required
                 />
               </Form.Group>
             </div>
@@ -337,7 +322,6 @@ export default function PedidosAddScreen() {
                 <Form.Control
                   onChange={(e) => setMontoPrima(e.target.value)}
                   value={montoPrima}
-                  required
                 />
               </Form.Group>
             </div>
@@ -352,7 +336,6 @@ export default function PedidosAddScreen() {
                   <Form.Label>Precio Dolar</Form.Label>
                   <Form.Control
                     onChange={(e) => setmontoDolar(e.target.value)}
-                    required
                   />
                 </Form.Group>
               </div>
@@ -362,7 +345,7 @@ export default function PedidosAddScreen() {
               {" "}
               <Form.Group className="mb-3" controlId="namerr">
                 <Form.Label>Margen de ganancia</Form.Label>
-                <Form.Control readOnly value={montoGanancia} />
+                <Form.Control value={montoGanancia} />
               </Form.Group>
             </div>
             <div className="col-4">
@@ -370,7 +353,6 @@ export default function PedidosAddScreen() {
                 <Form.Label>Descuento</Form.Label>
                 <Form.Control
                   onChange={(e) => onchangeDescuento(e.target.value)}
-                  required
                 />
               </Form.Group>
             </div>
@@ -380,19 +362,13 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Num factura</Form.Label>
-                <Form.Control
-                  onChange={(e) => setNumFactura(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setNumFactura(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-4">
                 <Form.Label>Detalle</Form.Label>
-                <Form.Control
-                  onChange={(e) => setDetalle(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setDetalle(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">

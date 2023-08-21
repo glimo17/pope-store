@@ -220,7 +220,7 @@ export default function PedidosListCreen() {
                 <option value="Pueblo viejo">Pueblo viejo</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-6" controlId="name">
+            <Form.Group className="mb-6" controlId="cliente">
               <Form.Label>Cliente</Form.Label>
               <Form.Control
                 // value={nameCustomer}
@@ -234,17 +234,17 @@ export default function PedidosListCreen() {
                 Sellecione el cliente
               </Button>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3" controlId="product">
               <Form.Label>Articulos</Form.Label>
               <Form.Control
                 onChange={(e) => setProduct(e.target.value)}
                 required
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="email">
+            <Form.Group className="mb-3" controlId="camt">
               <Form.Label>Cantidad</Form.Label>
               <Form.Control
-                type="email"
+                type="cant"
                 onChange={(e) => setCant(e.target.value)}
                 required
               />
