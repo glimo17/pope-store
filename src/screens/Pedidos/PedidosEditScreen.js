@@ -144,14 +144,18 @@ export default function PedidosEditScreen() {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos/${userId}`, {
+        const { data } = await axios.get(url + `api/pedidos/get/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         debugger;
-        setAccountId(data.name);
-        setProduct(data.email);
-        setFechaCreacion(data.phone);
-        setMontDescuento(data.canton);
+        setAccountId(data.accountId._id);
+        setIdCustomer(data.accountId.customerId._id);
+        setNameCustomer(data.accountId.customerId.name);
+        setProduct(data.product);
+        settalla(data.talla);
+        setDetalle(data.detalle);
+        setTipoPago(data.tipoPago);
+        setLugar(data.lugar);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
@@ -227,6 +231,7 @@ export default function PedidosEditScreen() {
                 <Form.Select
                   name="canton"
                   value={lugar}
+                  reaonly
                   onChange={(choice) => onchangeLugar(choice)}
                   aria-label="Frequencias de pago"
                 >
@@ -243,14 +248,7 @@ export default function PedidosEditScreen() {
                 <Form.Control value={nameCustomer} />
               </Form.Group>
             </div>
-            <div className="col-3">
-              <Form.Group className="mb-5">
-                <Form.Label></Form.Label>
-                <Button variant="primary" onClick={handleShow}>
-                  Sellecione el cliente
-                </Button>
-              </Form.Group>
-            </div>
+
             <div className="col-3">
               <Form.Group>
                 <Form.Label>Fecha creacion</Form.Label>
@@ -273,13 +271,19 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group className="mb-3" controlId="namee">
                 <Form.Label>Articulo</Form.Label>
-                <Form.Control onChange={(e) => setProduct(e.target.value)} />
+                <Form.Control
+                  value={product}
+                  onChange={(e) => setProduct(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Marca</Form.Label>
-                <Form.Control onChange={(e) => setMarca(e.target.value)} />
+                <Form.Control
+                  value={marca}
+                  onChange={(e) => setMarca(e.target.value)}
+                />
               </Form.Group>
             </div>
           </div>
@@ -293,7 +297,10 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Proveedor</Form.Label>
-                <Form.Control onChange={(e) => setproveedor(e.target.value)} />
+                <Form.Control
+                  value={proveedor}
+                  onChange={(e) => setproveedor(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col-4">
@@ -318,6 +325,7 @@ export default function PedidosEditScreen() {
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Precio venta</Form.Label>
                 <Form.Control
+                  value={montoVenta}
                   onChange={(e) => onchangeGanancia(e.target.value)}
                 />
               </Form.Group>
@@ -358,6 +366,7 @@ export default function PedidosEditScreen() {
               <Form.Group className="mb-3">
                 <Form.Label>Descuento</Form.Label>
                 <Form.Control
+                  value={descuento}
                   onChange={(e) => onchangeDescuento(e.target.value)}
                 />
               </Form.Group>
@@ -368,7 +377,10 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Num factura</Form.Label>
-                <Form.Control onChange={(e) => setNumFactura(e.target.value)} />
+                <Form.Control
+                  value={numFactura}
+                  onChange={(e) => setNumFactura(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col-4">
@@ -383,6 +395,7 @@ export default function PedidosEditScreen() {
 
                 <Form.Select
                   name="tipoPago"
+                  value={tipoPago}
                   onChange={(choice) => onchangeTipoPago(choice)}
                 >
                   <option>Seleccione</option>
@@ -425,51 +438,7 @@ export default function PedidosEditScreen() {
           </div>
         </Form>
       </div>
-      <div>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Lista de CLientes</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {loadingDelete && <LoadingBox></LoadingBox>}
-            {loading ? (
-              <LoadingBox></LoadingBox>
-            ) : error ? (
-              <MessageBox variant="danger">{error}</MessageBox>
-            ) : (
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>NAME</th>
-                    <th>EMAIL</th>
-                    <th>PHONE</th>
-                    <th>ACTIONS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map((user) => (
-                    <tr key={user._id}>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.phone}</td>
-                      <td>
-                        <Button
-                          type="button"
-                          variant="success"
-                          onClick={async () => setIdCustomerHandle(user)}
-                        >
-                          <i className="fas fa-user-edit"></i>
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
-      </div>
+      <div></div>
     </div>
   );
 }
