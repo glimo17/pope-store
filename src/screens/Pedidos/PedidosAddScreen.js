@@ -99,6 +99,7 @@ export default function PedidosAddScreen() {
     setIdCustomer(value._id);
     setNameCustomer(value.name);
     setShow(false);
+    setTipoCliente(" El ciente es " + value.tipo);
   };
 
   // const url = "http://localhost:5000/";
@@ -155,13 +156,13 @@ export default function PedidosAddScreen() {
   };
   useEffect(() => {
     const fetchData = async () => {
+      debugger;
       try {
         dispatch({ type: "FETCH_REQUEST" });
         const { data } = await axios.get(url + `api/customers`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
 
-        setTipoCliente(data.accountId.customerId.tipo);
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({
@@ -248,11 +249,13 @@ export default function PedidosAddScreen() {
                 </Form.Select>
               </Form.Group>
             </div>
-            <div className="col-3">
+            <div className="col-5">
               <Form.Group className="mb-5">
                 <Form.Label>Cliente</Form.Label>
                 <Form.Control onClick={handleShow} value={nameCustomer} />
               </Form.Group>
+
+              <h2> {tipoCliente}</h2>
             </div>
             <div className="col-3"></div>
             <div className="col-3">
