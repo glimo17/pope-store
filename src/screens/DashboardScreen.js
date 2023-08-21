@@ -38,7 +38,7 @@ export default function DashboardScreen() {
     const fetchData = async () => {
       debugger;
       try {
-        const { data } = await axios.get(url +"api/orders/summary", {
+        const { data } = await axios.get(url + "api/orders/summary", {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: "FETCH_SUCCESS", payload: data });
@@ -117,7 +117,7 @@ export default function DashboardScreen() {
             )}
           </div>
           <div className="my-3">
-            <h2>Categories</h2>
+            <h2>Categorías</h2>
             {summary.productCategories.length === 0 ? (
               <MessageBox>No Category</MessageBox>
             ) : (
