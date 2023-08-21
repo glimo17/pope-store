@@ -80,8 +80,13 @@ export default function PedidosAddScreen() {
   const [montoCosto, setMontoCosto] = useState(0);
   const [montoVenta, setMontoVenta] = useState(0);
   const [lugar, setLugar] = useState(0);
+  const [tcNum, setTcNum] = useState("");
 
   const [isSanJose, setIsSanJose] = useState({
+    id: "divOne3",
+  });
+
+  const [isTc, setIsTc] = useState({
     id: "divOne3",
   });
 
@@ -121,6 +126,15 @@ export default function PedidosAddScreen() {
   };
   const onchangeTipoPago = async (choice) => {
     setTipoPago(choice.target.value);
+    if (choice.target.value == "Tarjeta") {
+      setIsTc({
+        id: "divOne",
+      });
+    } else {
+      setIsTc({
+        id: "divOne3",
+      });
+    }
   };
   useEffect(() => {
     debugger;
@@ -172,6 +186,7 @@ export default function PedidosAddScreen() {
           montoVenta: montoVenta,
           montoGanancia: montoGanancia,
           cant: cant,
+          tcNum:tcNum,
           fechaCreacion: fechaCreacion,
           fechaEntrega: fechaEntrega,
           fechaCompra: fechaCompra,
@@ -393,6 +408,15 @@ export default function PedidosAddScreen() {
                   <option value="Tarjeta">Tarjeta</option>
                 </Form.Select>
               </Form.Group>
+            </div>
+            <div className={isTc.id === "divOne" ? `divOne` : "divOne d-none"}>
+              {" "}
+              <div className="col-4">
+                <Form.Group controlId="name">
+                  <Form.Label>Tc </Form.Label>
+                  <Form.Control onChange={(e) => setTcNum(e.target.value)} />
+                </Form.Group>
+              </div>
             </div>
           </div>
           <div className="row">
