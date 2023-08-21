@@ -59,17 +59,62 @@ export default function PedidosAddScreen() {
 
   const handleShow = () => setShow(true);
   const [value, setValue] = useState("");
-  const [idCustomer, setIdCustomer] = useState("");
+  const [customerId, setIdCustomer] = useState("");
   const [nameCustomer, setNameCustomer] = useState("");
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState("");
+  const [fechaCreacion, setFechaCreacion] = useState("");
+  const [fechaCompra, setFechaCompra] = useState("");
+  const [fechaEntrega, setFechaEntrega] = useState("");
+  const [montoDolar, setmontoDolar] = useState(0);
+  const [montoGanancia, setMontoGanancia] = useState(0);
+  const [descuento, setMontDescuento] = useState(0);
+  const [talla, settalla] = useState("");
+  const [proveedor, setproveedor] = useState("");
+  const [detalle, setDetalle] = useState("");
+  const [status, setStatus] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [montoPrima, setMontoPrima] = useState(0);
+  const [tipoPago, setTipoPago] = useState("");
+  const [numFactura, setNumFactura] = useState("");
+  const [marca, setMarca] = useState("");
+  const [montoCosto, setMontoCosto] = useState(0);
+  const [montoVenta, setMontoVenta] = useState(0);
+  const [lugar, setLugar] = useState(0);
+
+  const [isSanJose, setIsSanJose] = useState({
+    id: "divOne3",
+  });
+
   const setIdCustomerHandle = async (value) => {
     debugger;
     setIdCustomer(value._id);
     setNameCustomer(value.name);
     setShow(false);
   };
+
   //   const url = "http://localhost:5000/";
   const url = "https://pope-api.vercel.app/";
+
+  const onchangeGanancia = async (value) => {
+    let x = value - montoCosto;
+    setMontoGanancia(x);
+  };
+  const onchangeLugar = async (choice) => {
+    debugger;
+    setLugar(choice.target.value);
+    if (choice.target.value == "San Jose") {
+      setIsSanJose({
+        id: "divOne3",
+      });
+    } else {
+      setIsSanJose({
+        id: "divOne",
+      });
+    }
+  };
+  const onchangeTipoPago = async (choice) => {
+    setTipoPago(choice.target.value);
+  };
   useEffect(() => {
     debugger;
     const fetchData = async () => {
@@ -96,35 +141,50 @@ export default function PedidosAddScreen() {
   const onchangeHandle = async (choice) => {
     // setCanton(choice.target.value);
   };
-  //   const submitHandler = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       dispatch({ type: "UPDATE_REQUEST" });
-  //       const { data } = await axios.post(
-  //         url + "/api/customers",
-  //         {
-  //         //   name: name,
-  //         //   email: email,
-  //         //   phone: phone,
-  //         //   canton: canton,
-  //         //   direc: direc,
-  //         },
-  //         {
-  //           headers: {
-  //             authorization: `Bearer ${userInfo.token}`,
-  //           },
-  //         }
-  //       );
-  //       dispatch({
-  //         type: "UPDATE_SUCCESS",
-  //       });
-  //       toast.success("User updated successfully");
-  //       navigate("/admin/customers");
-  //     } catch (error) {
-  //       toast.error(getError(error));
-  //       dispatch({ type: "UPDATE_FAIL" });
-  //     }
-  //   };
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    debugger;
+    try {
+      dispatch({ type: "UPDATE_REQUEST" });
+      const { data } = await axios.post(
+        url + "api/pedidos",
+        {
+          customerId: customerId,
+          product: product,
+          proveedor: proveedor,
+          detalle: detalle,
+          talla: talla,
+          lugar: lugar,
+          marca: marca,
+          codigo: codigo,
+          tipoPago: tipoPago,
+          numFactura: numFactura,
+          montoCosto: montoCosto,
+          descuento: descuento,
+          montoPrima: montoPrima,
+          montoVenta: montoVenta,
+          montoGanancia: 50000,
+          cant: cant,
+          fechaCreacion: fechaCreacion,
+          fechaEntrega: fechaEntrega,
+          fechaCompra: fechaCompra,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({
+        type: "UPDATE_SUCCESS",
+      });
+      toast.success("User updated successfully");
+      navigate("/admin/pedidos");
+    } catch (error) {
+      toast.error(getError(error));
+      dispatch({ type: "UPDATE_FAIL" });
+    }
+  };
   return (
     <div>
       <div>
@@ -132,14 +192,14 @@ export default function PedidosAddScreen() {
           <title>Crear </title>
         </Helmet>
         <h1>Crear nuevo pedido</h1>
-        <Form>
+        <Form onSubmit={submitHandler}>
           <div className="row">
             <div className="col-3">
               <Form.Group className="mb-5" controlId="phone">
                 <Form.Label>Lugar de compra</Form.Label>
                 <Form.Select
                   name="canton"
-                  // onChange={(choice) => onchangeHandle(choice)}
+                  onChange={(choice) => onchangeLugar(choice)}
                   aria-label="Frequencias de pago"
                 >
                   <option>Seleccione</option>
@@ -170,11 +230,11 @@ export default function PedidosAddScreen() {
               <DatePicker
                 selected={startDate}
                 readOnly
-                onChange={(date) => setStartDate(date)}
+                onChange={(date) => date(date)}
               />
             </div>
           </div>
-          <h2>Detalle pedido</h2>
+          <h2>Detalle Articulo</h2>
           <div className="row">
             <div className="col-4">
               <Form.Check // prettier-ignore
@@ -184,7 +244,7 @@ export default function PedidosAddScreen() {
               />
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3" controlId="namee">
                 <Form.Label>Articulo</Form.Label>
                 <Form.Control
                   onChange={(e) => setProduct(e.target.value)}
@@ -195,11 +255,7 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Marca</Form.Label>
-                <Form.Control
-                  type="email"
-                  onChange={(e) => setCant(e.target.value)}
-                  required
-                />
+                <Form.Control onChange={(e) => setMarca(e.target.value)} />
               </Form.Group>
             </div>
           </div>
@@ -208,38 +264,16 @@ export default function PedidosAddScreen() {
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Talla-Capacidad</Form.Label>
                 <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
+                  onChange={(e) => settalla(e.target.value)}
                   required
                 />
               </Form.Group>
             </div>
-            <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Precio costo</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className="col-4">
-              <Form.Group className="mb-4" controlId="email">
-                <Form.Label>Precio venta</Form.Label>
-                <Form.Control
-                  type="email"
-                  onChange={(e) => setCant(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </div>
-          </div>
-
-          <div className="row">
             <div className="col-4">
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Proveedor</Form.Label>
                 <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
+                  onChange={(e) => setproveedor(e.target.value)}
                   required
                 />
               </Form.Group>
@@ -248,37 +282,94 @@ export default function PedidosAddScreen() {
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Codigo</Form.Label>
                 <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
+                  onChange={(e) => setCodigo(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <h2>Detalle Montos</h2>
+          <div className="row">
+            <div className="col-4">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Precio costo</Form.Label>
+                <Form.Control
+                  onChange={(e) => setMontoCosto(e.target.value)}
+                  value={montoCosto}
                   required
                 />
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-4" controlId="email">
+                <Form.Label>Precio venta</Form.Label>
+                <Form.Control
+                  onChange={(e) => onchangeGanancia(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Monto prima</Form.Label>
+                <Form.Control
+                  onChange={(e) => setMontoPrima(e.target.value)}
+                  value={montoPrima}
+                  required
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <div className="row">
+            <div
+              className={isSanJose.id === "divOne" ? `divOne` : "divOne d-none"}
+            >
+              {" "}
+              <div className="col-4">
+                <Form.Group controlId="name">
+                  <Form.Label>Precio Dolar</Form.Label>
+                  <Form.Control
+                    onChange={(e) => setmontoDolar(e.target.value)}
+                    required
+                  />
+                </Form.Group>
+              </div>
+            </div>
+
+            <div className="col-4">
+              {" "}
+              <Form.Group className="mb-3" controlId="namerr">
+                <Form.Label>Margen de ganancia</Form.Label>
+                <Form.Control readOnly value={montoGanancia} />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Descuento</Form.Label>
+                <Form.Control
+                  onChange={(e) => setMontDescuento(e.target.value)}
+                  value={descuento}
+                  required
+                />
+              </Form.Group>
+            </div>
+          </div>
+          <h2>Detalle fechas</h2>
+          <div className="row">
+            <div className="col-4">
+              <Form.Group className="mb-3">
+                <Form.Label>Num factura</Form.Label>
+                <Form.Control
+                  onChange={(e) => setNumFactura(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-4">
                 <Form.Label>Detalle</Form.Label>
                 <Form.Control
-                  type="email"
-                  onChange={(e) => setCant(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Num factura</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </div>
-            <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Monto prima</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
+                  onChange={(e) => setDetalle(e.target.value)}
                   required
                 />
               </Form.Group>
@@ -286,43 +377,42 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Tipo de pago</Form.Label>
-                <Form.Control
-                  type="email"
-                  onChange={(e) => setCant(e.target.value)}
-                  required
-                />
+
+                <Form.Select
+                  name="tipoPago"
+                  onChange={(choice) => onchangeTipoPago(choice)}
+                >
+                  <option>Seleccione</option>
+                  <option value="Efectivo">Efectivo</option>
+                  <option value="Tarjeta">Tarjeta</option>
+                </Form.Select>
               </Form.Group>
             </div>
           </div>
           <div className="row">
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Num factura</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
-                  required
-                />
+              <Form.Group controlId="name">
+                <Form.Label>Fecha compra</Form.Label>
               </Form.Group>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setFechaCompra(date)}
+              />
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Monto prima</Form.Label>
-                <Form.Control
-                  onChange={(e) => setProduct(e.target.value)}
-                  required
-                />
+              <Form.Group controlId="name">
+                <Form.Label>Fecha entrega</Form.Label>
               </Form.Group>
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => setFechaEntrega(date)}
+              />
             </div>
-            <div className="col-4">
-              <Form.Group className="mb-4" controlId="email">
-                <Form.Label>Tipo de pago</Form.Label>
-                <Form.Control
-                  type="email"
-                  onChange={(e) => setCant(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </div>
+          </div>
+          <div className="mb-3">
+            <Button type="submit" variant="outline-primary">
+              Agregar
+            </Button>
           </div>
         </Form>
       </div>

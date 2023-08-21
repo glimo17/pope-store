@@ -16,7 +16,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Modal from "react-bootstrap/Modal";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-// const url = "http://localhost:5000/";
+// // const url = "http://localhost:5000/";
 const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;

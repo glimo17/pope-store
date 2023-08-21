@@ -129,8 +129,8 @@ export default function PedidosListCreen() {
           <tr>
             <th>Cliente</th>
             <th>Articulo</th>
-            <th>Cant</th>
-            <th>Monto</th>
+            <th>Fecha creacion</th>
+            <th>Estado</th>
           </tr>
         </thead>
         <tbody>
@@ -138,7 +138,8 @@ export default function PedidosListCreen() {
             <tr key={user._id}>
               <td>{user.accountId.customerId.name}</td>
               <td>{user.product}</td>
-              <td>{user.sta}</td>
+              <td>{user.date}</td>
+              <td>{user.status}</td>
             </tr>
           ))}
         </tbody>

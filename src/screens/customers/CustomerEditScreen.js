@@ -10,8 +10,8 @@ import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 import { Store } from "../../Store";
 import { getError } from ".././utils";
-const url = "http://localhost:5000";
-// const url = "https://pope-api.vercel.app";
+// const url = "http://localhost:5000";
+const url = "https://pope-api.vercel.app";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_REQUEST":
