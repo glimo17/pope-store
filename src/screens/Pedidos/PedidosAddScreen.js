@@ -99,6 +99,13 @@ export default function PedidosAddScreen() {
     let x = value - montoCosto;
     setMontoGanancia(x);
   };
+  const onchangeDescuento = async (value) => {
+    debugger;
+    let v = (montoCosto * value) / 100;
+    let y = Number(montoGanancia) + Number(v);
+    setMontoGanancia(y);
+    setMontDescuento(value);
+  };
   const onchangeLugar = async (choice) => {
     debugger;
     setLugar(choice.target.value);
@@ -163,7 +170,7 @@ export default function PedidosAddScreen() {
           descuento: descuento,
           montoPrima: montoPrima,
           montoVenta: montoVenta,
-          montoGanancia: 50000,
+          montoGanancia: montoGanancia,
           cant: cant,
           fechaCreacion: fechaCreacion,
           fechaEntrega: fechaEntrega,
@@ -347,8 +354,7 @@ export default function PedidosAddScreen() {
               <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Descuento</Form.Label>
                 <Form.Control
-                  onChange={(e) => setMontDescuento(e.target.value)}
-                  value={descuento}
+                  onChange={(e) => onchangeDescuento(e.target.value)}
                   required
                 />
               </Form.Group>
