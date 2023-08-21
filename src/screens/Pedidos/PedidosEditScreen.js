@@ -104,6 +104,7 @@ export default function PedidosEditScreen() {
   const onchangeGanancia = async (value) => {
     let x = value - montoCosto;
     setMontoGanancia(x);
+    setMontoVenta(value);
   };
   const onchangeDescuento = async (value) => {
     debugger;
@@ -148,7 +149,7 @@ export default function PedidosEditScreen() {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         debugger;
-        setAccountId(data.accountId._id);
+
         setIdCustomer(data.accountId.customerId._id);
         setNameCustomer(data.accountId.customerId.name);
         setProduct(data.product);
@@ -161,6 +162,10 @@ export default function PedidosEditScreen() {
         setMontoCosto(data.montoCosto);
         setMontDescuento(data.descuento);
         setMontoVenta(data.montoVenta);
+        setMarca(data.marca);
+        setproveedor(data.proveedor);
+        setNumFactura(data.numFactura);
+        setMontoGanancia(data.montoGanancia);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
@@ -297,7 +302,10 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Talla-Capacidad</Form.Label>
-                <Form.Control onChange={(e) => settalla(e.target.value)} />
+                <Form.Control
+                  value={talla}
+                  onChange={(e) => settalla(e.target.value)}
+                />
               </Form.Group>
             </div>
             <div className="col-4">
