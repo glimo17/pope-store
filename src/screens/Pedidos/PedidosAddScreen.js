@@ -232,13 +232,13 @@ export default function PedidosAddScreen() {
               </Form.Group>
             </div>
             <div className="col-3">
-              <Form.Group className="mb-5" controlId="name">
+              <Form.Group className="mb-5">
                 <Form.Label>Cliente</Form.Label>
                 <Form.Control value={nameCustomer} />
               </Form.Group>
             </div>
             <div className="col-3">
-              <Form.Group className="mb-5" controlId="name">
+              <Form.Group className="mb-5">
                 <Form.Label></Form.Label>
                 <Button variant="primary" onClick={handleShow}>
                   Sellecione el cliente
@@ -246,7 +246,7 @@ export default function PedidosAddScreen() {
               </Form.Group>
             </div>
             <div className="col-3">
-              <Form.Group controlId="name">
+              <Form.Group>
                 <Form.Label>Fecha creacion</Form.Label>
               </Form.Group>
               <DatePicker
@@ -279,19 +279,19 @@ export default function PedidosAddScreen() {
           </div>
           <div className="row">
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Talla-Capacidad</Form.Label>
                 <Form.Control onChange={(e) => settalla(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Proveedor</Form.Label>
                 <Form.Control onChange={(e) => setproveedor(e.target.value)} />
               </Form.Group>
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Codigo</Form.Label>
                 <Form.Control onChange={(e) => setCodigo(e.target.value)} />
               </Form.Group>
@@ -300,7 +300,7 @@ export default function PedidosAddScreen() {
           <h2>Detalle Montos</h2>
           <div className="row">
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Precio costo</Form.Label>
                 <Form.Control
                   onChange={(e) => setMontoCosto(e.target.value)}
@@ -317,7 +317,7 @@ export default function PedidosAddScreen() {
               </Form.Group>
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Monto prima</Form.Label>
                 <Form.Control
                   onChange={(e) => setMontoPrima(e.target.value)}
@@ -332,7 +332,7 @@ export default function PedidosAddScreen() {
             >
               {" "}
               <div className="col-4">
-                <Form.Group controlId="name">
+                <Form.Group>
                   <Form.Label>Precio Dolar</Form.Label>
                   <Form.Control
                     onChange={(e) => setmontoDolar(e.target.value)}
@@ -349,7 +349,7 @@ export default function PedidosAddScreen() {
               </Form.Group>
             </div>
             <div className="col-4">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3">
                 <Form.Label>Descuento</Form.Label>
                 <Form.Control
                   onChange={(e) => onchangeDescuento(e.target.value)}
@@ -388,7 +388,7 @@ export default function PedidosAddScreen() {
             <div className={isTc.id === "divOne" ? `divOne` : "divOne d-none"}>
               {" "}
               <div className="col-4">
-                <Form.Group controlId="name">
+                <Form.Group>
                   <Form.Label>Tc </Form.Label>
                   <Form.Control onChange={(e) => setTcNum(e.target.value)} />
                 </Form.Group>
@@ -397,13 +397,13 @@ export default function PedidosAddScreen() {
           </div>
           <div className="row">
             <div className="col-4">
-              <Form.Group controlId="name">
+              <Form.Group>
                 <Form.Label>Fecha compra</Form.Label>
               </Form.Group>
               <DatePicker onChange={(date) => setFechaCompra(date)} />
             </div>
             <div className="col-4">
-              <Form.Group controlId="name">
+              <Form.Group>
                 <Form.Label>Fecha entrega</Form.Label>
               </Form.Group>
               <DatePicker
