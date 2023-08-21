@@ -43,7 +43,7 @@ import AccountDetailScreen from "./screens/Accounts/AccountDetailScreen";
 import MapScreen from "./screens/MapScreen";
 import PedidosListCreen from "./screens/Pedidos/PedidosListCreen";
 import PedidosAddScreen from "./screens/Pedidos/PedidosAddScreen";
-
+import PedidosEditScreen from "./screens/Pedidos/PedidosEditScreen";
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { fullBox, cart, userInfo } = state;
@@ -292,6 +292,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <PedidosAddScreen />
+                  </AdminRoute>
+                }
+              ></Route>
+              <Route
+                path="/admin/pedidos/:id"
+                element={
+                  <AdminRoute>
+                    <PedidosEditScreen />
                   </AdminRoute>
                 }
               ></Route>

@@ -175,7 +175,7 @@ export default function PedidosListCreen() {
                     <Button
                       type="button"
                       variant="success"
-                      // onClick={async () => setIdCustomerHandle(user)}
+                      onClick={() => navigate(`/admin/pedidos/${user._id}`)}
                     >
                       Continuar
                     </Button>
