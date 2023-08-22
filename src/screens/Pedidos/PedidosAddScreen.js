@@ -110,8 +110,11 @@ export default function PedidosAddScreen() {
     setMontoGanancia(x);
   };
   const onchangeDescuento = async (value) => {
+    debugger;
     let v = (montoCosto * value) / 100;
-    let y = Number(montoGanancia) + Number(v);
+
+    let u = montoCosto - montoVenta;
+    let y = Number(u) + Number(v);
     setMontoGanancia(y);
     setMontDescuento(value);
   };
