@@ -78,6 +78,7 @@ export default function PedidosAddScreen() {
   const [tipoPago, setTipoPago] = useState("");
   const [numFactura, setNumFactura] = useState("");
   const [marca, setMarca] = useState("");
+  const [link, setLink] = useState("");
   const [montoCosto, setMontoCosto] = useState(0);
   const [montoCostoDes, setMontoCostoDes] = useState(0);
   const [montoVenta, setMontoVenta] = useState(0);
@@ -200,11 +201,13 @@ export default function PedidosAddScreen() {
           detalle: detalle,
           talla: talla,
           lugar: lugar,
+          link: link,
           marca: marca,
           codigo: codigo,
           tipoPago: tipoPago,
           numFactura: numFactura,
           montoCosto: montoCosto,
+          montoCostoDes: montoCostoDes,
           descuento: descuento,
           montoPrima: montoPrima,
           montoVenta: montoVenta,
@@ -306,6 +309,12 @@ export default function PedidosAddScreen() {
                 <Form.Control onChange={(e) => setMarca(e.target.value)} />
               </Form.Group>
             </div>
+            <div className="col-4">
+              <Form.Group className="mb-4" controlId="email">
+                <Form.Label>Link de ejemplo</Form.Label>
+                <Form.Control onChange={(e) => setMarca(e.target.value)} />
+              </Form.Group>
+            </div>
           </div>
           <div className="row">
             <div className="col-4">
@@ -365,6 +374,7 @@ export default function PedidosAddScreen() {
                 <Form.Group>
                   <Form.Label>Precio Dolar</Form.Label>
                   <Form.Control
+                    value={montoDolar}
                     onChange={(e) => setmontoDolar(e.target.value)}
                   />
                 </Form.Group>
@@ -375,7 +385,7 @@ export default function PedidosAddScreen() {
               {" "}
               <Form.Group className="mb-3" controlId="namerr">
                 <Form.Label>Margen de ganancia</Form.Label>
-                <Form.Control value={montoGanancia} />
+                <Form.Control readOnly value={montoGanancia} />
               </Form.Group>
             </div>
             <div className="col-4">
@@ -389,10 +399,7 @@ export default function PedidosAddScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Precio costo con descuento</Form.Label>
-                <Form.Control
-                  value={montoCostoDes}
-                  onChange={(e) => onchangeDescuento(e.target.value)}
-                />
+                <Form.Control value={montoCostoDes} readOnly />
               </Form.Group>
             </div>
           </div>

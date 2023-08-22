@@ -82,7 +82,8 @@ export default function PedidosEditScreen() {
   const [montoVenta, setMontoVenta] = useState(0);
   const [lugar, setLugar] = useState("");
   const [tcNum, setTcNum] = useState("");
-
+  const [link, setLink] = useState("");
+  const [montoCostoDes, setMontoCostoDes] = useState(0);
   const [isSanJose, setIsSanJose] = useState({
     id: "divOne3",
   });
@@ -207,6 +208,8 @@ export default function PedidosEditScreen() {
           montoPrima: montoPrima,
           montoVenta: montoVenta,
           montoGanancia: montoGanancia,
+          montoCosto: montoCosto,
+          montoCostoDes: montoCostoDes,
           cant: cant,
           tcNum: tcNum,
           fechaCreacion: fechaCreacion,
@@ -373,7 +376,7 @@ export default function PedidosEditScreen() {
               {" "}
               <Form.Group className="mb-3" controlId="namerr">
                 <Form.Label>Margen de ganancia</Form.Label>
-                <Form.Control value={montoGanancia} />
+                <Form.Control readOnly value={montoGanancia} />
               </Form.Group>
             </div>
             <div className="col-4">
