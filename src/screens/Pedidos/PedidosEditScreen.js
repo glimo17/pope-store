@@ -163,12 +163,14 @@ export default function PedidosEditScreen() {
         setmontoDolar(data.montoDolar);
         setMontoCosto(data.montoCosto);
         setMontDescuento(data.descuento);
+        setMontoCostoDes(data.montoCostoDes);
         setMontoVenta(data.montoVenta);
         setMarca(data.marca);
         setproveedor(data.proveedor);
         setNumFactura(data.numFactura);
         setMontoGanancia(data.montoGanancia);
         setCodigo(data.codigo);
+        setCodigo(data.link);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
