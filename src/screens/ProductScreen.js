@@ -286,7 +286,7 @@ export default function ProductScreen() {
             <MessageBox>
               Please{" "}
               <Link to={`/signin?redirect=/product/${product.slug}`}>
-                Sign In
+                Ingresar
               </Link>{" "}
               to write a review
             </MessageBox>

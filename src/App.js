@@ -101,14 +101,14 @@ function App() {
               <Navbar.Collapse id="basic-navbar-nav">
                 <SearchBar />
                 <Nav className="me-auto  w-100  justify-content-end">
-                  <Link to="/cart" className="nav-link">
+                  {/* <Link to="/cart" className="nav-link">
                     Pedidos
                     {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
                         {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                       </Badge>
                     )}
-                  </Link>
+                  </Link> */}
                   {userInfo ? (
                     <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
                       <LinkContainer to="/profile">
@@ -128,7 +128,7 @@ function App() {
                     </NavDropdown>
                   ) : (
                     <Link className="nav-link" to="/signin">
-                      Login
+                      Iniciar sessión
                     </Link>
                   )}
                   {userInfo && userInfo.isAdmin && (

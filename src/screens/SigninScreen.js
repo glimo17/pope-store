@@ -47,12 +47,12 @@ export default function SigninScreen() {
   return (
     <Container className="small-container">
       <Helmet>
-        <title>Sign In</title>
+        <title>Ingresar</title>
       </Helmet>
-      <h1 className="my-3">Sign In</h1>
+      <h1 className="my-3">Ingresar</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>Correo</Form.Label>
           <Form.Control
             type="email"
             autoComplete="abc@example.com"
@@ -61,7 +61,7 @@ export default function SigninScreen() {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Clave</Form.Label>
           <Form.Control
             type="password"
             required
@@ -70,12 +70,11 @@ export default function SigninScreen() {
         </Form.Group>
         <div className="mb-3 d-grid">
           <Button type="submit" variant="outline-primary">
-            Sign In
+            Ingresar
           </Button>
         </div>
         <div className="mb-3">
-          New Customer?{" "}
-          <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
+          <Link to={`/signup?redirect=${redirect}`}>Registrarse</Link>
         </div>
       </Form>
     </Container>
