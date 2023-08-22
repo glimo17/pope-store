@@ -79,6 +79,7 @@ export default function PedidosAddScreen() {
   const [numFactura, setNumFactura] = useState("");
   const [marca, setMarca] = useState("");
   const [montoCosto, setMontoCosto] = useState(0);
+  const [montoCostoDes, setMontoCostoDes] = useState(0);
   const [montoVenta, setMontoVenta] = useState(0);
   const [lugar, setLugar] = useState(0);
   const [tcNum, setTcNum] = useState("");
@@ -117,6 +118,8 @@ export default function PedidosAddScreen() {
     let y = Number(u) + Number(v);
     setMontoGanancia(y);
     setMontDescuento(value);
+    let z = Number(u) - Number(v);
+    setMontoCostoDes(z);
   };
   const onchangeLugar = async (choice) => {
     setLugar(choice.target.value);
@@ -379,6 +382,15 @@ export default function PedidosAddScreen() {
               <Form.Group className="mb-3">
                 <Form.Label>Descuento</Form.Label>
                 <Form.Control
+                  onChange={(e) => onchangeDescuento(e.target.value)}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-3">
+                <Form.Label>Precio costo con descuento</Form.Label>
+                <Form.Control
+                  value={montoCostoDes}
                   onChange={(e) => onchangeDescuento(e.target.value)}
                 />
               </Form.Group>
