@@ -98,7 +98,7 @@ export default function PedidosEditScreen() {
     setShow(false);
   };
 
-  // // const url = "http://localhost:5000/";
+  // const url = "http://localhost:5000/";
   const url = "https://pope-api.vercel.app/";
 
   const onchangeGanancia = async (value) => {

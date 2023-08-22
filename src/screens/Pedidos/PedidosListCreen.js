@@ -104,6 +104,31 @@ export default function PedidosListCreen() {
       });
     }
   };
+
+  const handleStatusC = async (user) => {
+    setShowModalPedido(false);
+    try {
+      dispatch({ type: "DELETE_REQUEST" });
+      await axios.post(
+        url + `api/pedidos/status`,
+        {
+          id: user._id,
+          id: "Comprar",
+        },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      toast.success("Pedido agregado");
+      dispatch({ type: "DELETE_SUCCESS" });
+    } catch (error) {
+      alert(getError(error));
+      toast.error(getError(error));
+      dispatch({
+        type: "DELETE_FAIL",
+      });
+    }
+  };
   const { state } = useContext(Store);
   const { userInfo } = state;
 
@@ -203,6 +228,15 @@ export default function PedidosListCreen() {
                       onClick={() => navigate(`/admin/pedidos/${user._id}`)}
                     >
                       Continuar
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      type="button"
+                      variant="success"
+                      onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                    >
+                      Pasar a Comprar
                     </Button>
                   </td>
                 </tr>
