@@ -105,21 +105,21 @@ export default function PedidosListCreen() {
     }
   };
 
-  const handleStatusC = async (user) => {
-    setShowModalPedido(false);
+  const handleStatusC = async (user, status) => {
+    debugger;
     try {
       dispatch({ type: "DELETE_REQUEST" });
       await axios.post(
         url + `api/pedidos/status`,
         {
-          id: user._id,
-          id: "Comprar",
+          id: user,
+          status: status,
         },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
       );
-      toast.success("Pedido agregado");
+      toast.success("Estado actualizado en el pedido");
       dispatch({ type: "DELETE_SUCCESS" });
     } catch (error) {
       alert(getError(error));
@@ -180,6 +180,7 @@ export default function PedidosListCreen() {
                   aria-label="Frequencias de pago"
                 >
                   <option value="Ingresado">Ingresado</option>
+                  <option value="Comprar">Comprar</option>
                   <option value="Comprado">Comprado</option>
                   <option value="Entregar">Entregar</option>
                   <option value="Entregado">Entregado</option>
@@ -230,13 +231,23 @@ export default function PedidosListCreen() {
                       Continuar
                     </Button>
                   </td>
+
                   <td>
                     <Button
                       type="button"
                       variant="success"
-                      onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                      onClick={() => handleStatusC(user._id, "Comprar")}
                     >
-                      Pasar a Comprar
+                      Comprar
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      type="button"
+                      variant="success"
+                      onClick={() => handleStatusC(user._id, "Comprado")}
+                    >
+                      Comprado
                     </Button>
                   </td>
                 </tr>

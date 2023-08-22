@@ -222,7 +222,7 @@ export default function PedidosEditScreen() {
       dispatch({
         type: "UPDATE_SUCCESS",
       });
-      toast.success("User updated successfully");
+      toast.success("Estado actualizado en el pedido");
       navigate("/admin/pedidos");
     } catch (error) {
       toast.error(getError(error));
@@ -432,17 +432,21 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group>
                 <Form.Label>Fecha compra</Form.Label>
+                <Form.Control
+                  type="date"
+                  onChange={(e) => setFechaCompra(e.target.value)}
+                />
               </Form.Group>
-              <DatePicker onChange={(date) => setFechaCompra(date)} />
             </div>
             <div className="col-4">
               <Form.Group>
                 <Form.Label>Fecha entrega</Form.Label>
+
+                <Form.Control
+                  type="date"
+                  onChange={(e) => setFechaEntrega(e.target.value)}
+                />
               </Form.Group>
-              <DatePicker
-                value={fechaEntrega}
-                onChange={(date) => setFechaEntrega(date.target.value)}
-              />
             </div>
           </div>
           <div className="row">

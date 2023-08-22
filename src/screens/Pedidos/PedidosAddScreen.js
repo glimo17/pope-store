@@ -218,7 +218,7 @@ export default function PedidosAddScreen() {
       dispatch({
         type: "UPDATE_SUCCESS",
       });
-      toast.success("User updated successfully");
+      toast.success("Pedido creado");
       navigate("/admin/pedidos");
     } catch (error) {
       toast.error(getError(error));
