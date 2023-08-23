@@ -63,7 +63,7 @@ export default function PedidosEditScreen() {
   const [customerId, setIdCustomer] = useState("");
   const [nameCustomer, setNameCustomer] = useState("");
   const [show, setShow] = useState("");
-  const [fechaCreacion, setFechaCreacion] = useState("");
+  const [date, setDate] = useState("");
   const [fechaCompra, setFechaCompra] = useState("");
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [montoDolar, setmontoDolar] = useState(0);
@@ -214,7 +214,6 @@ export default function PedidosEditScreen() {
           montoCostoDes: montoCostoDes,
           cant: cant,
           tcNum: tcNum,
-          fechaCreacion: fechaCreacion,
           fechaEntrega: fechaEntrega,
           fechaCompra: fechaCompra,
         },
@@ -267,12 +266,10 @@ export default function PedidosEditScreen() {
 
             <div className="col-3">
               <Form.Group>
-                <Form.Label>Fecha creacion</Form.Label>
+                <Form.Label>Fecha creación</Form.Label>
+
+                <Form.Control type="text" value={date} readOnly />
               </Form.Group>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => date(date)}
-              />
             </div>
           </div>
           <h2>Detalle Articulo</h2>
