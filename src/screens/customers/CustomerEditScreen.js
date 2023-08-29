@@ -58,7 +58,7 @@ export default function CustomerEditScreen() {
   const [dayPay2, setDayPay2] = useState("");
   const [dateFirstPay, setDateFirstPay] = useState("");
   const [dayString, setDayString] = useState("");
-  const [montoCuota, setMontoCuota] = useState("");
+  const [montoCuota, setMontoCuota] = useState(0);
 
   const onchangeHandleLugar = async (choice) => {
     setCanton(choice.target.value);
@@ -92,7 +92,7 @@ export default function CustomerEditScreen() {
         setPhone(data.phone);
         setCanton(data.canton);
         setDirec(data.direc);
-
+        setMontoCuota(data.montoCuota);
         setDateConfig(data.dateConfig ? data.dateConfig.substring(0, 10) : "");
         setDateFirstPay(
           data.dateFirstPay ? data.dateFirstPay.substring(0, 10) : ""
