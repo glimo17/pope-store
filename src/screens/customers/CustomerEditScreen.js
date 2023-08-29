@@ -131,6 +131,7 @@ export default function CustomerEditScreen() {
           dateFirstPay,
           dateConfig,
           dayString,
+          montoCuota,
         },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },

@@ -50,7 +50,7 @@ export default function CustomerAddScreen() {
   const [dayPay, setDayPay] = useState("");
   const [dateFirstPay, setDateFirstPay] = useState("");
   const [dayString, setDayString] = useState("");
-
+  const [montoCuota, setMontoCuota] = useState("");
   //const url = "http://localhost:5000";
   const url = "https://pope-api.vercel.app";
   useEffect(() => {});
@@ -89,6 +89,7 @@ export default function CustomerAddScreen() {
           dayPay: dayPay,
           dateFirstPay: dateFirstPay,
           dayString: dayString,
+          montoCuota: montoCuota,
         },
         {
           headers: {
@@ -248,7 +249,16 @@ export default function CustomerAddScreen() {
             </Form.Group>
           </div>
         )}
-
+        <div className="col">
+          <Form.Group controlId="name">
+            <Form.Label>Monto de la cuota</Form.Label>
+            <Form.Control
+              value={montoCuota}
+              onChange={(e) => setMontoCuota(e.target.value)}
+              type="Ammount"
+            />
+          </Form.Group>
+        </div>
         <div className="mb-3">
           <Button type="submit" variant="outline-primary">
             Agregar

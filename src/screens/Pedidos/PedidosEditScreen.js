@@ -64,8 +64,8 @@ export default function PedidosEditScreen() {
   const [nameCustomer, setNameCustomer] = useState("");
   const [show, setShow] = useState("");
   const [date, setDate] = useState("");
-  const [fechaCompra, setFechaCompra] = useState("");
-  const [fechaEntrega, setFechaEntrega] = useState("");
+  const [dateCompra, setDateCompra] = useState("");
+  const [dateEntrega, setDateEntrega] = useState("");
   const [montoDolar, setmontoDolar] = useState(0);
   const [montoGanancia, setMontoGanancia] = useState(0);
   const [descuento, setMontDescuento] = useState(0);
@@ -180,7 +180,9 @@ export default function PedidosEditScreen() {
         setNumFactura(data.numFactura);
         setMontoGanancia(data.montoGanancia);
         setCodigo(data.codigo);
-        setCodigo(data.link);
+        setLink(data.link);
+        setDateEntrega(data.dateEntrega);
+        setDateCompra(data.dateCompra);
 
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
@@ -224,8 +226,8 @@ export default function PedidosEditScreen() {
           montoCostoDes: montoCostoDes,
           cant: cant,
           tcNum: tcNum,
-          fechaEntrega: fechaEntrega,
-          fechaCompra: fechaCompra,
+          dateEntrega: dateEntrega,
+          dateCompra: dateCompra,
         },
         {
           headers: {
@@ -446,8 +448,8 @@ export default function PedidosEditScreen() {
                 <Form.Label>Fecha compra</Form.Label>
                 <Form.Control
                   type="date"
-                  value={fechaCompra}
-                  onChange={(e) => setFechaCompra(e.target.value)}
+                  value={dateCompra}
+                  onChange={(e) => setDateCompra(e.target.value)}
                 />
               </Form.Group>
             </div>
@@ -457,8 +459,8 @@ export default function PedidosEditScreen() {
 
                 <Form.Control
                   type="date"
-                  value={fechaEntrega}
-                  onChange={(e) => setFechaEntrega(e.target.value)}
+                  value={dateEntrega}
+                  onChange={(e) => setDateEntrega(e.target.value)}
                 />
               </Form.Group>
             </div>

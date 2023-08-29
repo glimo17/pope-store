@@ -13,8 +13,8 @@ import MessageBox from "../../components/MessageBox";
 import Modal from "react-bootstrap/Modal";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
-const url = "http://localhost:5000/";
-// const url = "https://pope-api.vercel.app/";
+// const url = "http://localhost:5000/";
+const url = "https://pope-api.vercel.app/";
 const reducer = (state, action) => {
   debugger;
   switch (action.type) {
@@ -107,26 +107,28 @@ export default function PedidosListCreen() {
 
   const handleStatusC = async (user, status) => {
     debugger;
-    try {
-      dispatch({ type: "DELETE_REQUEST" });
-      await axios.post(
-        url + `api/pedidos/status`,
-        {
-          id: user,
-          status: status,
-        },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
-      toast.success("Estado actualizado en el pedido");
-      dispatch({ type: "DELETE_SUCCESS" });
-    } catch (error) {
-      alert(getError(error));
-      toast.error(getError(error));
-      dispatch({
-        type: "DELETE_FAIL",
-      });
+    if (window.confirm("Esta seguro de cambiar de estado al pedido?")) {
+      try {
+        dispatch({ type: "DELETE_REQUEST" });
+        await axios.post(
+          url + `api/pedidos/status`,
+          {
+            id: user,
+            status: status,
+          },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        toast.success("Estado actualizado en el pedido");
+        dispatch({ type: "DELETE_SUCCESS" });
+      } catch (error) {
+        alert(getError(error));
+        toast.error(getError(error));
+        dispatch({
+          type: "DELETE_FAIL",
+        });
+      }
     }
   };
   const { state } = useContext(Store);
@@ -218,6 +220,8 @@ export default function PedidosListCreen() {
                 <th>Cliente</th>
                 <th>Articulo</th>
                 <th>Fecha creacion</th>
+                <th>Fecha entrega</th>
+                <th>Monto venta</th>
                 <th>Estado</th>
                 <th>Accion</th>
               </tr>
@@ -228,6 +232,8 @@ export default function PedidosListCreen() {
                   <td>{user.accountId.customerId.name}</td>
                   <td>{user.product}</td>
                   <td>{user.date}</td>
+                  <td>{user.fechaEntrega}</td>
+                  <td>{user.montoVenta}</td>
                   <td>{user.status}</td>
                   {user.status === "Ingresado" && (
                     <>
@@ -262,15 +268,21 @@ export default function PedidosListCreen() {
                           Continuar
                         </Button>
                       </td>
-                      <td>
-                        <Button
-                          type="button"
-                          variant="success"
-                          onClick={() => handleStatusC(user._id, "Comprado")}
-                        >
-                          Comprado
-                        </Button>
-                      </td>
+                      {user.montoVenta > 0 && (
+                        <>
+                          <td>
+                            <Button
+                              type="button"
+                              variant="success"
+                              onClick={() =>
+                                handleStatusC(user._id, "Comprado")
+                              }
+                            >
+                              Comprado
+                            </Button>
+                          </td>
+                        </>
+                      )}
                     </>
                   )}
                   {user.status === "Comprado" && (
@@ -284,17 +296,21 @@ export default function PedidosListCreen() {
                           Continuar
                         </Button>
                       </td>
-                      <td>
-                        <Button
-                          type="button"
-                          variant="success"
-                          onClick={() =>
-                            handleStatusC(user._id, "Por Entregar")
-                          }
-                        >
-                          Por Entregar
-                        </Button>
-                      </td>
+                      {user.fechaEntrega && (
+                        <>
+                          <td>
+                            <Button
+                              type="button"
+                              variant="success"
+                              onClick={() =>
+                                handleStatusC(user._id, "Por Entregar")
+                              }
+                            >
+                              Por Entregar
+                            </Button>
+                          </td>
+                        </>
+                      )}
                     </>
                   )}
                   {user.status === "Por Entregar" && (
