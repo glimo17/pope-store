@@ -56,7 +56,7 @@ export default function PedidosListCreen() {
   const [showModalPedido, setShowModalPedido] = useState(false);
   const [showModalPago, setShowModalPago] = useState(false);
   const navigate = useNavigate();
-  const [lugar, setLugar] = useState("");
+  const [lugar, setLugar] = useState("San Jose");
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   const page = sp.get("page") || 1;
@@ -136,7 +136,7 @@ export default function PedidosListCreen() {
     setStatus(choice.target.value);
   };
   const onchangeFilter2 = async (choice) => {
-    setStatus(choice.target.value);
+    setLugar(choice.target.value);
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -161,7 +161,7 @@ export default function PedidosListCreen() {
     } else {
       fetchData();
     }
-  }, [userInfo, successDelete, status]);
+  }, [userInfo, successDelete, status, lugar]);
 
   return users ? (
     <div>
@@ -182,6 +182,7 @@ export default function PedidosListCreen() {
                 <Form.Label>Estado</Form.Label>
                 <Form.Select
                   name="canton"
+                  value={status}
                   onChange={(choice) => onchangeFilter(choice)}
                   aria-label="Frequencias de pago"
                 >
