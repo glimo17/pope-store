@@ -51,7 +51,7 @@ export default function CustomerAddScreen() {
   const [dateFirstPay, setDateFirstPay] = useState("");
   const [dayString, setDayString] = useState("");
 
-  // const url = "http://localhost:5000";
+  //const url = "http://localhost:5000";
   const url = "https://pope-api.vercel.app";
   useEffect(() => {});
 

@@ -55,13 +55,19 @@ export default function CustomerEditScreen() {
   const [frec, setFrec] = useState("");
   const [dateConfig, setDateConfig] = useState("");
   const [dayPay, setDayPay] = useState("");
+  const [dayPay2, setDayPay2] = useState("");
   const [dateFirstPay, setDateFirstPay] = useState("");
   const [dayString, setDayString] = useState("");
+  const [montoCuota, setMontoCuota] = useState("");
 
   const onchangeHandleLugar = async (choice) => {
     setCanton(choice.target.value);
   };
 
+  const HandleDateConfig = async (choice) => {
+    debugger;
+    setDateConfig(choice);
+  };
   const onchangeHandleConfig = async (choice) => {
     setFrec(choice.target.value);
   };
@@ -74,8 +80,6 @@ export default function CustomerEditScreen() {
   };
 
   useEffect(() => {
-    debugger;
-
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
@@ -88,9 +92,13 @@ export default function CustomerEditScreen() {
         setPhone(data.phone);
         setCanton(data.canton);
         setDirec(data.direc);
-        setDateConfig(data.dateConfig);
-        setDateFirstPay(data.dateFirstPay);
+
+        setDateConfig(data.dateConfig ? data.dateConfig.substring(0, 10) : "");
+        setDateFirstPay(
+          data.dateFirstPay ? data.dateFirstPay.substring(0, 10) : ""
+        );
         setDayPay(data.dayPay);
+        setDayPay2(data.dayPay2);
         setDayString(data.dayString);
         setFrec(data.frec);
         dispatch({ type: "FETCH_SUCCESS" });
@@ -110,7 +118,20 @@ export default function CustomerEditScreen() {
       dispatch({ type: "UPDATE_REQUEST" });
       await axios.put(
         url + `/api/customers/${userId}`,
-        { _id: userId, name, email, phone, canton, direc },
+        {
+          _id: userId,
+          name,
+          email,
+          phone,
+          canton,
+          direc,
+          frec,
+          dayPay,
+          dayPay2,
+          dateFirstPay,
+          dateConfig,
+          dayString,
+        },
         {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         }
@@ -209,14 +230,36 @@ export default function CustomerEditScreen() {
                   />
                 </Form.Group>
               )}
+              {frec === "Quincenal" && (
+                <>
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Día de Pago</Form.Label>
+
+                    <Form.Control
+                      value={dayPay}
+                      onChange={(e) => setDayPay(e.target.value)}
+                      type="Ammount"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Día de Pago 2</Form.Label>
+
+                    <Form.Control
+                      value={dayPay2}
+                      onChange={(e) => setDayPay2(e.target.value)}
+                      type="Ammount"
+                    />
+                  </Form.Group>
+                </>
+              )}
             </div>
             <div className="col">
-              <Form.Group className="mb-3" controlId="name">
+              <Form.Group className="mb-3" controlId="name4">
                 <Form.Label>Fecha Configuración</Form.Label>
                 <Form.Control
-                  onChange={(e) => setDateConfig(e.target.value)}
-                  type="date"
                   value={dateConfig}
+                  onChange={(e) => HandleDateConfig(e.target.value)}
+                  type="date"
                 />
               </Form.Group>
             </div>
@@ -252,6 +295,17 @@ export default function CustomerEditScreen() {
               </Form.Group>
             </div>
           )}
+
+          <div className="col">
+            <Form.Group controlId="name">
+              <Form.Label>Monto de la cuota</Form.Label>
+              <Form.Control
+                value={montoCuota}
+                onChange={(e) => setMontoCuota(e.target.value)}
+                type="Ammount"
+              />
+            </Form.Group>
+          </div>
           <div className="mb-3">
             <Button
               disabled={loadingUpdate}

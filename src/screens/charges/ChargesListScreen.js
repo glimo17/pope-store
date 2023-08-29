@@ -178,13 +178,13 @@ export default function ChargesListScreen() {
         <title>Pagos</title>
       </Helmet>
       <h1>Pagos de la semana</h1>
-      <Button
+      {/* <Button
         type="button"
         variant="success"
         onClick={() => navigate(`/admin/customerAdd/`)}
       >
         <i className="fas fa-user-edit"></i>Pope
-      </Button>
+      </Button> */}
       {loadingDelete && <LoadingBox></LoadingBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
