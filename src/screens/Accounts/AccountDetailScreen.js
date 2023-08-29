@@ -107,7 +107,7 @@ export default function AccountDetailScreen() {
         const { data } = await axios.get(url + `api/accounts/${userId}`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
-
+        debugger;
         setNameCustomer(data.customerId.name);
         setNum(data.num);
         setAmount(data.ammount);
@@ -232,9 +232,7 @@ export default function AccountDetailScreen() {
           ))} */}
             </tbody>
           </table>
-          <Form>
-
-          </Form>
+          <Form></Form>
         </Tab>
         {/* 
         <Tab eventKey="contact" title="Confifurar Pagos">
