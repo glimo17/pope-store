@@ -231,8 +231,10 @@ export default function PedidosListCreen() {
                 <tr key={user._id}>
                   <td>{user.accountId.customerId.name}</td>
                   <td>{user.product}</td>
-                  <td>{user.date}</td>
-                  <td>{user.fechaEntrega}</td>
+                  <td>{user.date ? user.date.substring(0, 10) : ""}</td>
+                  <td>
+                    {user.dateEntrega ? user.dateEntrega.substring(0, 10) : ""}
+                  </td>
                   <td>{user.montoVenta}</td>
                   <td>{user.status}</td>
                   {user.status === "Ingresado" && (
@@ -296,7 +298,7 @@ export default function PedidosListCreen() {
                           Continuar
                         </Button>
                       </td>
-                      {user.fechaEntrega && (
+                      {user.dateEntrega && (
                         <>
                           <td>
                             <Button

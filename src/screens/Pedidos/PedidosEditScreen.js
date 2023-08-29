@@ -183,7 +183,7 @@ export default function PedidosEditScreen() {
         setLink(data.link);
         setDateEntrega(data.dateEntrega);
         setDateCompra(data.dateCompra);
-
+        setStatus(data.status);
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
         dispatch({
@@ -465,11 +465,24 @@ export default function PedidosEditScreen() {
               </Form.Group>
             </div>
           </div>
+          {status !== "Entregado" && (
+            <>
+              <div className="row">
+                <div className="col-4">
+                  <Form.Group>
+                    <Button type="submit" variant="outline-primary">
+                      Actualizar Pedido
+                    </Button>
+                  </Form.Group>
+                </div>
+              </div>
+            </>
+          )}
           <div className="row">
             <div className="col-4">
               <Form.Group>
-                <Button type="submit" variant="outline-primary">
-                  Actualizar Pedido
+                <Button onClick={() => navigate("/admin/pedidos")}>
+                  Atras
                 </Button>
               </Form.Group>
             </div>
