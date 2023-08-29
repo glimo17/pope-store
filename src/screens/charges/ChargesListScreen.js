@@ -112,7 +112,7 @@ export default function ChargesListScreen() {
         const { data } = await axios.post(
           url + "api/charges/makeCharge",
           {
-            accountId: idCharge,
+            _id: idCharge,
           },
           {
             headers: {
@@ -195,7 +195,8 @@ export default function ChargesListScreen() {
           <thead>
             <tr>
               <th>Cliente</th>
-              <th>Num credito</th>
+              <th>Fecha de Pago</th>
+              <th>Description</th>
               <th>Monto de cobro</th>
               <th>Monto de pago</th>
               <th>ACTIONS</th>
@@ -205,7 +206,8 @@ export default function ChargesListScreen() {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>{user.accountId.customerId.name}</td>
-                <td>{user.accountId.num}</td>
+                <td>{user.date}</td>
+                <td>{user.description}</td>
                 <td>{user.ammount}</td>
                 <td>{user.ammountPay}</td>
                 <td>
