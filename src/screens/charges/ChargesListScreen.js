@@ -74,6 +74,7 @@ export default function ChargesListScreen() {
     setIdCharge(value);
     setShow(true);
   };
+  // const url = "http://localhost:5000/";
   const url = "https://pope-api.vercel.app/";
   const setAmmountHandlePay = async (e) => {
     setShow(false);

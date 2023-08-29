@@ -85,6 +85,8 @@ export default function PedidosAddScreen() {
   const [lugar, setLugar] = useState(0);
   const [tcNum, setTcNum] = useState("");
   const [tipoCliente, setTipoCliente] = useState("");
+  const [montoCambioDolar, setmontoCambioDolar] = useState("");
+
   const [isSanJose, setIsSanJose] = useState({
     id: "divOne3",
   });
@@ -121,6 +123,12 @@ export default function PedidosAddScreen() {
     setMontDescuento(value);
     let z = Number(u) - Number(v);
     setMontoCostoDes(z);
+  };
+  const onchangeCambioDolar = async (value) => {
+    debugger;
+    let v = montoDolar * value;
+    setMontoCosto(v);
+    setmontoDolar(value);
   };
   const onchangeLugar = async (choice) => {
     setLugar(choice.target.value);
@@ -376,6 +384,15 @@ export default function PedidosAddScreen() {
                   <Form.Control
                     value={montoDolar}
                     onChange={(e) => setmontoDolar(e.target.value)}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-4">
+                <Form.Group>
+                  <Form.Label>Precio cambio Dolar</Form.Label>
+                  <Form.Control
+                    value={montoCambioDolar}
+                    onChange={(e) => onchangeCambioDolar(e.target.value)}
                   />
                 </Form.Group>
               </div>

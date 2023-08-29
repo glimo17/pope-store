@@ -45,6 +45,11 @@ export default function CustomerAddScreen() {
   const [oficio, setOficio] = useState("");
   const [tipo, setTipo] = useState("");
   const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [frec, setFrec] = useState("");
+  const [dateConfig, setDateConfig] = useState("");
+  const [dayPay, setDayPay] = useState("");
+  const [dateFirstPay, setDateFirstPay] = useState("");
+  const [dayString, setDayString] = useState("");
 
   // const url = "http://localhost:5000";
   const url = "https://pope-api.vercel.app";
@@ -56,6 +61,13 @@ export default function CustomerAddScreen() {
 
   const onchangeHandleLugar = async (choice) => {
     setCanton(choice.target.value);
+  };
+
+  const onchangeHandleConfig = async (choice) => {
+    setFrec(choice.target.value);
+  };
+  const onchangeHandleConfigDay = async (choice) => {
+    setDayString(choice.target.value);
   };
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -72,6 +84,11 @@ export default function CustomerAddScreen() {
           oficio: oficio,
           fechaNacimiento: fechaNacimiento,
           tipo: tipo,
+          frec: frec,
+          dateConfig: dateConfig,
+          dayPay: dayPay,
+          dateFirstPay: dateFirstPay,
+          dayString: dayString,
         },
         {
           headers: {
@@ -164,6 +181,74 @@ export default function CustomerAddScreen() {
           <Form.Label>Oficio</Form.Label>
           <Form.Control onChange={(e) => setOficio(e.target.value)} required />
         </Form.Group>
+        <h2>Configuración de pago</h2>
+        <div className="row">
+          <div className="col">
+            <Form.Group controlId="name">
+              <Form.Label>Frequencias de pago</Form.Label>
+              <Form.Select
+                onChange={(choice) => onchangeHandleConfig(choice)}
+                aria-label="Frequencias de pago"
+              >
+                <option>Seleccione</option>
+                <option value="Semanal">Semanal</option>
+                <option value="Bi-Semanal">Bi Semanal</option>
+                <option value="Quincenal">Quincenal</option>
+                <option value="Mensual">Mensual</option>
+              </Form.Select>
+            </Form.Group>
+            {}
+            {frec === "Mensual" && (
+              <Form.Group className="mb-3" controlId="email">
+                <Form.Label>Día de Pago</Form.Label>
+
+                <Form.Control
+                  onChange={(e) => setDayPay(e.target.value)}
+                  type="Ammount"
+                />
+              </Form.Group>
+            )}
+          </div>
+          <div className="col">
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Fecha Configuración</Form.Label>
+              <Form.Control
+                onChange={(e) => setDateConfig(e.target.value)}
+                type="date"
+              />
+            </Form.Group>
+          </div>
+          <div className="col">
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Fecha Primer pagos</Form.Label>
+              <Form.Control
+                onChange={(e) => setDateFirstPay(e.target.value)}
+                type="date"
+              />
+            </Form.Group>
+          </div>
+        </div>
+        {frec === "Semanal" && (
+          <div className="col">
+            <Form.Group controlId="name">
+              <Form.Label>Dia de la semana</Form.Label>
+              <Form.Select
+                onChange={(choice) => onchangeHandleConfigDay(choice)}
+                aria-label="Frequencias de pago"
+              >
+                <option>Seleccione</option>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miercoles">Miercoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sabado">Sabado</option>
+                <option value="Domingo">Domingo</option>
+              </Form.Select>
+            </Form.Group>
+          </div>
+        )}
+
         <div className="mb-3">
           <Button type="submit" variant="outline-primary">
             Agregar

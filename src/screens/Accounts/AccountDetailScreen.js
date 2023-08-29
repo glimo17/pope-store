@@ -233,36 +233,7 @@ export default function AccountDetailScreen() {
             </tbody>
           </table>
           <Form>
-            <div className="row">
-              <div className="col">
-                <Form.Group controlId="name">
-                  <Form.Label>Frequencias de pago</Form.Label>
-                  <Form.Select aria-label="Frequencias de pago">
-                    <option>Seleccione</option>
-                    <option value="Semanal">Semanal</option>
-                    <option value="Bi-Semanal">Bi Semanal</option>
-                    <option value="Quincenal">Quincenal</option>
-                    <option value="Mensual">Mensual</option>
-                  </Form.Select>
-                </Form.Group>
-                {}
-                <Form.Group className="mb-3" controlId="email">
-                  <Form.Label>Cliente</Form.Label>
 
-                  <Form.Control type="Ammount" readOnly />
-                </Form.Group>
-              </div>
-              <div className="col">
-                <Form.Group controlId="name">
-                  <Form.Label>Fecha de configuracion</Form.Label>
-                </Form.Group>
-                <DatePicker
-                  selected={startDate}
-                  readOnly
-                  onChange={(date) => setStartDate(date)}
-                />
-              </div>
-            </div>
           </Form>
         </Tab>
         {/* 
@@ -272,7 +243,7 @@ export default function AccountDetailScreen() {
               <div className="col-3">
                 <Form.Group controlId="name">
                   <Form.Label>Fecha de Inicio</Form.Label>
-                </Form.Group>
+                </Form.Group> 
                 <DatePicker
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}

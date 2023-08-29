@@ -135,13 +135,19 @@ export default function PedidosListCreen() {
   const onchangeFilter = async (choice) => {
     setStatus(choice.target.value);
   };
+  const onchangeFilter2 = async (choice) => {
+    setStatus(choice.target.value);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const { data } = await axios.get(url + `api/pedidos/filter/` + status, {
-          headers: { Authorization: `Bearer userInfo.token` },
-        });
+        const { data } = await axios.get(
+          url + `api/pedidos/lugar/` + status + `/` + lugar,
+          {
+            headers: { Authorization: `Bearer userInfo.token` },
+          }
+        );
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({
@@ -180,9 +186,9 @@ export default function PedidosListCreen() {
                   aria-label="Frequencias de pago"
                 >
                   <option value="Ingresado">Ingresado</option>
-                  <option value="Comprar">Comprar</option>
+                  <option value="Por Comprar">Por Comprar</option>
                   <option value="Comprado">Comprado</option>
-                  <option value="Entregar">Entregar</option>
+                  <option value="Por Entregar">Por Entregar</option>
                   <option value="Entregado">Entregado</option>
                 </Form.Select>
               </Form.Group>
@@ -194,7 +200,7 @@ export default function PedidosListCreen() {
                   name="canton"
                   value={lugar}
                   reaonly
-                  onChange={(choice) => onchangeLugar(choice)}
+                  onChange={(choice) => onchangeFilter2(choice)}
                   aria-label="Frequencias de pago"
                 >
                   <option>Seleccione</option>
@@ -222,34 +228,110 @@ export default function PedidosListCreen() {
                   <td>{user.product}</td>
                   <td>{user.date}</td>
                   <td>{user.status}</td>
-                  <td>
-                    <Button
-                      type="button"
-                      variant="success"
-                      onClick={() => navigate(`/admin/pedidos/${user._id}`)}
-                    >
-                      Continuar
-                    </Button>
-                  </td>
+                  {user.status === "Ingresado" && (
+                    <>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                        >
+                          Continuar
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => handleStatusC(user._id, "Por Comprar")}
+                        >
+                          Por Comprar
+                        </Button>
+                      </td>
+                    </>
+                  )}
+                  {user.status === "Por Comprar" && (
+                    <>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                        >
+                          Continuar
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => handleStatusC(user._id, "Comprado")}
+                        >
+                          Comprado
+                        </Button>
+                      </td>
+                    </>
+                  )}
+                  {user.status === "Comprado" && (
+                    <>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                        >
+                          Continuar
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() =>
+                            handleStatusC(user._id, "Por Entregar")
+                          }
+                        >
+                          Por Entregar
+                        </Button>
+                      </td>
+                    </>
+                  )}
+                  {user.status === "Por Entregar" && (
+                    <>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                        >
+                          Continuar
+                        </Button>
+                      </td>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => handleStatusC(user._id, "Entregado")}
+                        >
+                          Entregado
+                        </Button>
+                      </td>
+                    </>
+                  )}
 
-                  <td>
-                    <Button
-                      type="button"
-                      variant="success"
-                      onClick={() => handleStatusC(user._id, "Comprar")}
-                    >
-                      Comprar
-                    </Button>
-                  </td>
-                  <td>
-                    <Button
-                      type="button"
-                      variant="success"
-                      onClick={() => handleStatusC(user._id, "Comprado")}
-                    >
-                      Comprado
-                    </Button>
-                  </td>
+                  {user.status === "Entregado" && (
+                    <>
+                      <td>
+                        <Button
+                          type="button"
+                          variant="success"
+                          onClick={() => navigate(`/admin/pedidos/${user._id}`)}
+                        >
+                          Ver Pedido
+                        </Button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
             </tbody>

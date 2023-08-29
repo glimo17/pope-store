@@ -34,8 +34,8 @@ const Cliente = ({ id }) => {
   const params = useParams();
   const { id: userId } = params;
   const [tipo, setTipo] = useState("");
-  const url = "http://localhost:5000";
-  // const url = "https://pope-api.vercel.app";
+  // const url = "http://localhost:5000";
+  const url = "https://pope-api.vercel.app";
   useEffect(() => {
     debugger;
 

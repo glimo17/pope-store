@@ -49,6 +49,25 @@ export default function CustomerEditScreen() {
   const [phone, setPhone] = useState("");
   const [canton, setCanton] = useState("");
   const [direc, setDirec] = useState("");
+  const [oficio, setOficio] = useState("");
+  const [tipo, setTipo] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [frec, setFrec] = useState("");
+  const [dateConfig, setDateConfig] = useState("");
+  const [dayPay, setDayPay] = useState("");
+  const [dateFirstPay, setDateFirstPay] = useState("");
+  const [dayString, setDayString] = useState("");
+
+  const onchangeHandleLugar = async (choice) => {
+    setCanton(choice.target.value);
+  };
+
+  const onchangeHandleConfig = async (choice) => {
+    setFrec(choice.target.value);
+  };
+  const onchangeHandleConfigDay = async (choice) => {
+    setDayString(choice.target.value);
+  };
 
   const onchangeHandle = async (choice) => {
     setCanton(choice.target.value);
@@ -69,6 +88,11 @@ export default function CustomerEditScreen() {
         setPhone(data.phone);
         setCanton(data.canton);
         setDirec(data.direc);
+        setDateConfig(data.dateConfig);
+        setDateFirstPay(data.dateFirstPay);
+        setDayPay(data.dayPay);
+        setDayString(data.dayString);
+        setFrec(data.frec);
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
         dispatch({
@@ -156,7 +180,78 @@ export default function CustomerEditScreen() {
               required
             />
           </Form.Group>
+          <h2>Configuración de pago</h2>
+          <div className="row">
+            <div className="col">
+              <Form.Group controlId="name">
+                <Form.Label>Frequencias de pago</Form.Label>
+                <Form.Select
+                  onChange={(choice) => onchangeHandleConfig(choice)}
+                  aria-label="Frequencias de pago"
+                  value={frec}
+                >
+                  <option>Seleccione</option>
+                  <option value="Semanal">Semanal</option>
+                  <option value="Bi-Semanal">Bi Semanal</option>
+                  <option value="Quincenal">Quincenal</option>
+                  <option value="Mensual">Mensual</option>
+                </Form.Select>
+              </Form.Group>
+              {}
+              {frec === "Mensual" && (
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Día de Pago</Form.Label>
 
+                  <Form.Control
+                    value={dayPay}
+                    onChange={(e) => setDayPay(e.target.value)}
+                    type="Ammount"
+                  />
+                </Form.Group>
+              )}
+            </div>
+            <div className="col">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Fecha Configuración</Form.Label>
+                <Form.Control
+                  onChange={(e) => setDateConfig(e.target.value)}
+                  type="date"
+                  value={dateConfig}
+                />
+              </Form.Group>
+            </div>
+            <div className="col">
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Fecha Primer pagos</Form.Label>
+                <Form.Control
+                  value={dateFirstPay}
+                  onChange={(e) => setDateFirstPay(e.target.value)}
+                  type="date"
+                />
+              </Form.Group>
+            </div>
+          </div>
+          {frec === "Semanal" && (
+            <div className="col">
+              <Form.Group controlId="name">
+                <Form.Label>Dia de la semana</Form.Label>
+                <Form.Select
+                  value={dayString}
+                  onChange={(choice) => onchangeHandleConfigDay(choice)}
+                  aria-label="Frequencias de pago"
+                >
+                  <option>Seleccione</option>
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miercoles">Miercoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sabado">Sabado</option>
+                  <option value="Domingo">Domingo</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
+          )}
           <div className="mb-3">
             <Button
               disabled={loadingUpdate}
