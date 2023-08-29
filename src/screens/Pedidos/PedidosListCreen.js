@@ -223,7 +223,7 @@ export default function PedidosListCreen() {
                 <th>Fecha entrega</th>
                 <th>Monto venta</th>
                 <th>Estado</th>
-                <th>Accion</th>
+                <th>Acción</th>
               </tr>
             </thead>
             <tbody>
