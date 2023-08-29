@@ -103,17 +103,27 @@ export default function PedidosEditScreen() {
   const url = "https://pope-api.vercel.app/";
 
   const onchangeGanancia = async (value) => {
-    debugger;
-    setMontoVenta(value);
     let x = value - montoCosto;
     setMontoGanancia(x);
+    setMontoVenta(value);
   };
   const onchangeDescuento = async (value) => {
     debugger;
     let v = (montoCosto * value) / 100;
-    let y = Number(montoGanancia) + Number(v);
+
+    let u = montoVenta - montoCosto;
+    let y = Number(u) + Number(v);
     setMontoGanancia(y);
     setMontDescuento(value);
+    let z = Number(u) - Number(v);
+    setMontoCostoDes(z);
+  };
+
+  const onchangeCambioDolar = async (value) => {
+    debugger;
+    let v = montoDolar * value;
+    setMontoCosto(v);
+    setmontoDolar(value);
   };
   const onchangeLugar = async (choice) => {
     debugger;
@@ -341,8 +351,8 @@ export default function PedidosEditScreen() {
               <Form.Group className="mb-4" controlId="email">
                 <Form.Label>Precio venta</Form.Label>
                 <Form.Control
-                  value={montoVenta}
                   onChange={(e) => onchangeGanancia(e.target.value)}
+                  value={montoVenta}
                 />
               </Form.Group>
             </div>
