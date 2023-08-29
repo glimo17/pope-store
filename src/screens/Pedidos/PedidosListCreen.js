@@ -206,7 +206,7 @@ export default function PedidosListCreen() {
                   onChange={(choice) => onchangeFilter2(choice)}
                   aria-label="Frequencias de pago"
                 >
-                  <option>Seleccione</option>
+                  <option>Selecciones</option>
                   <option value="San Jose">San Jose</option>
                   <option value="Panama">Panama</option>
                   <option value="USA">USA</option>
