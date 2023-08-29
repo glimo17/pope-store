@@ -181,8 +181,10 @@ export default function PedidosEditScreen() {
         setMontoGanancia(data.montoGanancia);
         setCodigo(data.codigo);
         setLink(data.link);
-        setDateEntrega(data.dateEntrega);
-        setDateCompra(data.dateCompra);
+        setDateEntrega(
+          data.dateEntrega ? data.dateEntrega.substring(0, 10) : ""
+        );
+        setDateCompra(data.dateCompra ? data.dateCompra.substring(0, 10) : "");
         setStatus(data.status);
         dispatch({ type: "FETCH_SUCCESS" });
       } catch (err) {
