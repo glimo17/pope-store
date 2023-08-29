@@ -446,6 +446,7 @@ export default function PedidosEditScreen() {
                 <Form.Label>Fecha compra</Form.Label>
                 <Form.Control
                   type="date"
+                  value={fechaCompra}
                   onChange={(e) => setFechaCompra(e.target.value)}
                 />
               </Form.Group>
@@ -456,6 +457,7 @@ export default function PedidosEditScreen() {
 
                 <Form.Control
                   type="date"
+                  value={fechaEntrega}
                   onChange={(e) => setFechaEntrega(e.target.value)}
                 />
               </Form.Group>
