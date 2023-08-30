@@ -108,7 +108,7 @@ export default function ChargesListScreen() {
       setShow(false);
       e.preventDefault();
       try {
-        dispatch({ type: "UPDATE_REQUEST" });
+        dispatch({ type: "DELETE_REQUEST" });
         const { data } = await axios.post(
           url + "api/charges/makeCharge",
           {
@@ -121,12 +121,12 @@ export default function ChargesListScreen() {
           }
         );
         dispatch({
-          type: "UPDATE_SUCCESS",
+          type: "DELETE_SUCCESS",
         });
         toast.success("Monto actualizado");
       } catch (error) {
         toast.error(getError(error));
-        dispatch({ type: "UPDATE_FAIL" });
+        dispatch({ type: "DELETE_FAIL" });
       }
     }
   };
