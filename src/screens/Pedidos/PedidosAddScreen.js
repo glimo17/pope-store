@@ -64,8 +64,8 @@ export default function PedidosAddScreen() {
   const [nameCustomer, setNameCustomer] = useState("");
   const [show, setShow] = useState("");
   const [fechaCreacion, setFechaCreacion] = useState("");
-  const [fechaCompra, setFechaCompra] = useState("");
-  const [fechaEntrega, setFechaEntrega] = useState("");
+  const [dateCompra, setDateCompra] = useState("");
+  const [dateEntrega, setDateEntrega] = useState("");
   const [montoDolar, setmontoDolar] = useState(0);
   const [montoGanancia, setMontoGanancia] = useState(0);
   const [descuento, setMontDescuento] = useState(0);
@@ -86,6 +86,7 @@ export default function PedidosAddScreen() {
   const [tcNum, setTcNum] = useState("");
   const [tipoCliente, setTipoCliente] = useState("");
   const [montoCambioDolar, setmontoCambioDolar] = useState("");
+  const [limit, setLimit] = useState("");
 
   const [isSanJose, setIsSanJose] = useState({
     id: "divOne3",
@@ -100,10 +101,11 @@ export default function PedidosAddScreen() {
   });
 
   const setIdCustomerHandle = async (value) => {
-    setIdCustomer(value._id);
-    setNameCustomer(value.name);
+    setIdCustomer(value.customerId._id);
+    setNameCustomer(value.customerId.name);
     setShow(false);
-    setTipoCliente(" El ciente es " + value.tipo);
+    setTipoCliente(" El ciente es " + value.customerId.tipo);
+    setLimit(" y el limite es: " + value.limit);
   };
 
   // const url = "http://localhost:5000/";
@@ -112,23 +114,24 @@ export default function PedidosAddScreen() {
   const onchangeGanancia = async (value) => {
     let x = value - montoCosto;
     setMontoGanancia(x);
+    setMontoVenta(value);
   };
   const onchangeDescuento = async (value) => {
     debugger;
     let v = (montoCosto * value) / 100;
 
-    let u = montoCosto - montoVenta;
+    let u = montoVenta - montoCosto;
     let y = Number(u) + Number(v);
     setMontoGanancia(y);
     setMontDescuento(value);
     let z = Number(u) - Number(v);
-    setMontoCostoDes(z);
+    setMontoCostoDes(montoCosto - v);
   };
   const onchangeCambioDolar = async (value) => {
     debugger;
-    let v = montoDolar * value;
+    setmontoCambioDolar(value);
+    let v = value * montoDolar;
     setMontoCosto(v);
-    setmontoDolar(value);
   };
   const onchangeLugar = async (choice) => {
     setLugar(choice.target.value);
@@ -178,6 +181,9 @@ export default function PedidosAddScreen() {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
 
+        debugger;
+
+        let d = data;
         dispatch({ type: "FETCH_SUCCESS", payload: data });
       } catch (err) {
         dispatch({
@@ -197,6 +203,7 @@ export default function PedidosAddScreen() {
     // setCanton(choice.target.value);
   };
   const submitHandler = async (e) => {
+    debugger;
     e.preventDefault();
     try {
       dispatch({ type: "UPDATE_REQUEST" });
@@ -220,11 +227,13 @@ export default function PedidosAddScreen() {
           montoPrima: montoPrima,
           montoVenta: montoVenta,
           montoGanancia: montoGanancia,
+          montoCambioDolar: montoCambioDolar,
+          montoDolar: montoDolar,
           cant: cant,
           tcNum: tcNum,
           fechaCreacion: fechaCreacion,
-          fechaEntrega: fechaEntrega,
-          fechaCompra: fechaCompra,
+          dateCompra: dateCompra,
+          dateVenta: dateEntrega,
         },
         {
           headers: {
@@ -273,6 +282,7 @@ export default function PedidosAddScreen() {
               </Form.Group>
 
               <h2> {tipoCliente}</h2>
+              <h2> {limit}</h2>
             </div>
             <div className="col-3"></div>
             <div className="col-3">
@@ -346,6 +356,28 @@ export default function PedidosAddScreen() {
           </div>
           <h2>Detalle Montos</h2>
           <div className="row">
+            <div
+              className={isSanJose.id === "divOne" ? `divOne` : "divOne d-none"}
+            >
+              {" "}
+              <div className="col-4">
+                <Form.Group className="mb-3">
+                  <Form.Label>Precio Dolar</Form.Label>
+                  <Form.Control
+                    onChange={(e) => setmontoDolar(e.target.value)}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-4">
+                <Form.Group className="mb-3">
+                  <Form.Label>Tipo cambio Dolar</Form.Label>
+                  <Form.Control
+                    onChange={(e) => onchangeCambioDolar(e.target.value)}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Precio costo</Form.Label>
@@ -374,30 +406,6 @@ export default function PedidosAddScreen() {
             </div>
           </div>
           <div className="row">
-            <div
-              className={isSanJose.id === "divOne" ? `divOne` : "divOne d-none"}
-            >
-              {" "}
-              <div className="col-4">
-                <Form.Group>
-                  <Form.Label>Precio Dolar</Form.Label>
-                  <Form.Control
-                    value={montoDolar}
-                    onChange={(e) => setmontoDolar(e.target.value)}
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-4">
-                <Form.Group>
-                  <Form.Label>Precio cambio Dolar</Form.Label>
-                  <Form.Control
-                    value={montoCambioDolar}
-                    onChange={(e) => onchangeCambioDolar(e.target.value)}
-                  />
-                </Form.Group>
-              </div>
-            </div>
-
             <div className="col-4">
               {" "}
               <Form.Group className="mb-3" controlId="namerr">
@@ -464,7 +472,7 @@ export default function PedidosAddScreen() {
                 <Form.Label>Fecha compra</Form.Label>
                 <Form.Control
                   type="date"
-                  onChange={(e) => setFechaCompra(e.target.value)}
+                  onChange={(e) => setDateCompra(e.target.value)}
                 />
               </Form.Group>
             </div>
@@ -474,13 +482,13 @@ export default function PedidosAddScreen() {
 
                 <Form.Control
                   type="date"
-                  onChange={(e) => setFechaEntrega(e.target.value)}
+                  onChange={(e) => setDateEntrega(e.target.value)}
                 />
               </Form.Group>
             </div>
           </div>
           <div className="mb-3">
-            <Button type="submit" variant="outline-primary">
+            <Button type="submit" preventDefault variant="outline-primary">
               Agregar
             </Button>
           </div>
@@ -510,9 +518,9 @@ export default function PedidosAddScreen() {
                 <tbody>
                   {users.map((user) => (
                     <tr key={user._id}>
-                      <td>{user.name}</td>
-                      <td>{user.email}</td>
-                      <td>{user.phone}</td>
+                      <td>{user.customerId.name}</td>
+                      <td>{user.customerId.email}</td>
+                      <td>{user.customerId.phone}</td>
                       <td>
                         <Button
                           type="button"

@@ -206,7 +206,7 @@ export default function ChargesListScreen() {
             {users.map((user) => (
               <tr key={user._id}>
                 <td>{user.accountId.customerId.name}</td>
-                <td>{user.date}</td>
+                <td>{user.date ? user.date.substring(0, 10) : ""}</td>
                 <td>{user.description}</td>
                 <td>{user.ammount}</td>
                 <td>{user.ammountPay}</td>

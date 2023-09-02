@@ -84,6 +84,7 @@ export default function PedidosEditScreen() {
   const [tcNum, setTcNum] = useState("");
   const [link, setLink] = useState("");
   const [montoCostoDes, setMontoCostoDes] = useState(0);
+  const [montoCambioDolar, setmontoCambioDolar] = useState(0);
   const [isSanJose, setIsSanJose] = useState({
     id: "divOne3",
   });
@@ -116,14 +117,13 @@ export default function PedidosEditScreen() {
     setMontoGanancia(y);
     setMontDescuento(value);
     let z = Number(u) - Number(v);
-    setMontoCostoDes(z);
+    setMontoCostoDes(montoCosto - v);
   };
-
   const onchangeCambioDolar = async (value) => {
     debugger;
-    let v = montoDolar * value;
+    setmontoCambioDolar(value);
+    let v = value * montoDolar;
     setMontoCosto(v);
-    setmontoDolar(value);
   };
   const onchangeLugar = async (choice) => {
     debugger;
@@ -171,6 +171,7 @@ export default function PedidosEditScreen() {
         setLugar(data.lugar);
         setMontoPrima(data.montoPrima);
         setmontoDolar(data.montoDolar);
+        setmontoCambioDolar(data.montoCambioDolar);
         setMontoCosto(data.montoCosto);
         setMontDescuento(data.descuento);
         setMontoCostoDes(data.montoCostoDes);
@@ -184,6 +185,8 @@ export default function PedidosEditScreen() {
         setDateEntrega(
           data.dateEntrega ? data.dateEntrega.substring(0, 10) : ""
         );
+
+        setmontoDolar(data.montoDolar);
         setDateCompra(data.dateCompra ? data.dateCompra.substring(0, 10) : "");
         setStatus(data.status);
         dispatch({ type: "FETCH_SUCCESS" });
@@ -225,6 +228,8 @@ export default function PedidosEditScreen() {
           montoVenta: montoVenta,
           montoGanancia: montoGanancia,
           montoCosto: montoCosto,
+          montoCambioDolar: montoCambioDolar,
+          montoDolar: montoDolar,
           montoCostoDes: montoCostoDes,
           cant: cant,
           tcNum: tcNum,
@@ -288,13 +293,13 @@ export default function PedidosEditScreen() {
           </div>
           <h2>Detalle Articulo</h2>
           <div className="row">
-            <div className="col-4">
+            {/* <div className="col-4">
               <Form.Check // prettier-ignore
                 type="switch"
                 id="custom-switch"
                 label="Conozco el producto"
               />
-            </div>
+            </div> */}
             <div className="col-4">
               <Form.Group className="mb-3" controlId="namee">
                 <Form.Label>Articulo</Form.Label>
@@ -336,12 +341,33 @@ export default function PedidosEditScreen() {
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Codigo</Form.Label>
-                <Form.Control onChange={(e) => setCodigo(e.target.value)} />
+                <Form.Control
+                  value={codigo}
+                  onChange={(e) => setCodigo(e.target.value)}
+                />
               </Form.Group>
             </div>
           </div>
           <h2>Detalle Montos</h2>
           <div className="row">
+            <div className="col-4">
+              <Form.Group>
+                <Form.Label>Precio Dolar</Form.Label>
+                <Form.Control
+                  value={montoDolar}
+                  onChange={(e) => setmontoDolar(e.target.value)}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+              <Form.Group className="mb-3">
+                <Form.Label>Tipo cambio Dolar</Form.Label>
+                <Form.Control
+                  value={montoCambioDolar}
+                  onChange={(e) => onchangeCambioDolar(e.target.value)}
+                />
+              </Form.Group>
+            </div>
             <div className="col-4">
               <Form.Group className="mb-3">
                 <Form.Label>Precio costo</Form.Label>
@@ -371,19 +397,7 @@ export default function PedidosEditScreen() {
             </div>
           </div>
           <div className="row">
-            <div
-              className={isSanJose.id === "divOne" ? `divOne` : "divOne d-none"}
-            >
-              {" "}
-              <div className="col-4">
-                <Form.Group>
-                  <Form.Label>Precio Dolar</Form.Label>
-                  <Form.Control
-                    onChange={(e) => setmontoDolar(e.target.value)}
-                  />
-                </Form.Group>
-              </div>
-            </div>
+            <div> </div>
 
             <div className="col-4">
               {" "}
